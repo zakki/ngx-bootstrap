@@ -2,7 +2,7 @@ webpackJsonp([2],[
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(7);
+	module.exports = __webpack_require__(8);
 
 
 /***/ },
@@ -407,7 +407,7 @@ webpackJsonp([2],[
 	                module && module.exports) {
 	            try {
 	                oldLocale = globalLocale._abbr;
-	                __webpack_require__(259)("./" + name);
+	                __webpack_require__(291)("./" + name);
 	                // because defineLocale currently also sets the global locale, we
 	                // want to undo that for lazy loaded locales
 	                locale_locales__getSetGlobalLocale(oldLocale);
@@ -4049,52 +4049,58 @@ webpackJsonp([2],[
 	    return _moment;
 	
 	}));
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(209)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(233)(module)))
 
 /***/ },
 /* 2 */,
 /* 3 */,
 /* 4 */,
 /* 5 */,
-/* 6 */,
-/* 7 */
+/* 6 */
+5,
+/* 7 */,
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	var accordion_1 = __webpack_require__(159);
-	var alert_1 = __webpack_require__(161);
-	var buttons_1 = __webpack_require__(162);
-	var carousel_1 = __webpack_require__(165);
-	var collapse_1 = __webpack_require__(36);
-	var datepicker_1 = __webpack_require__(168);
-	var dropdown_1 = __webpack_require__(170);
-	var pagination_1 = __webpack_require__(173);
-	var progressbar_1 = __webpack_require__(175);
-	var rating_1 = __webpack_require__(177);
-	var tabs_1 = __webpack_require__(178);
-	var timepicker_1 = __webpack_require__(180);
-	var tooltip_1 = __webpack_require__(181);
-	var typeahead_1 = __webpack_require__(184);
-	__export(__webpack_require__(159));
-	__export(__webpack_require__(161));
-	__export(__webpack_require__(162));
-	__export(__webpack_require__(165));
-	__export(__webpack_require__(36));
-	__export(__webpack_require__(168));
-	__export(__webpack_require__(170));
-	__export(__webpack_require__(173));
-	__export(__webpack_require__(175));
-	__export(__webpack_require__(177));
-	__export(__webpack_require__(178));
-	__export(__webpack_require__(180));
+	var accordion_1 = __webpack_require__(181);
+	var alert_1 = __webpack_require__(183);
+	var buttons_1 = __webpack_require__(184);
+	var carousel_1 = __webpack_require__(187);
+	var collapse_1 = __webpack_require__(46);
+	var datepicker_1 = __webpack_require__(190);
+	var dropdown_1 = __webpack_require__(192);
+	var modal_1 = __webpack_require__(195);
+	var pagination_1 = __webpack_require__(197);
+	var progressbar_1 = __webpack_require__(199);
+	var rating_1 = __webpack_require__(201);
+	var tabs_1 = __webpack_require__(202);
+	var timepicker_1 = __webpack_require__(204);
+	var tooltip_1 = __webpack_require__(205);
+	var typeahead_1 = __webpack_require__(208);
+	var components_helper_service_1 = __webpack_require__(211);
 	__export(__webpack_require__(181));
+	__export(__webpack_require__(183));
 	__export(__webpack_require__(184));
-	__export(__webpack_require__(27));
-	__export(__webpack_require__(167));
-	__export(__webpack_require__(17));
+	__export(__webpack_require__(187));
+	__export(__webpack_require__(46));
+	__export(__webpack_require__(190));
+	__export(__webpack_require__(195));
+	__export(__webpack_require__(192));
+	__export(__webpack_require__(197));
+	__export(__webpack_require__(199));
+	__export(__webpack_require__(201));
+	__export(__webpack_require__(202));
+	__export(__webpack_require__(204));
+	__export(__webpack_require__(205));
+	__export(__webpack_require__(208));
+	__export(__webpack_require__(30));
+	__export(__webpack_require__(189));
+	__export(__webpack_require__(19));
+	exports.BS_VIEW_PROVIDERS = [{ provide: components_helper_service_1.ComponentsHelper, useClass: components_helper_service_1.ComponentsHelper }];
 	Object.defineProperty(exports, "__esModule", { value: true });
 	exports.default = {
 	    directives: [
@@ -4105,6 +4111,7 @@ webpackJsonp([2],[
 	        collapse_1.CollapseDirective,
 	        datepicker_1.DATEPICKER_DIRECTIVES,
 	        dropdown_1.DROPDOWN_DIRECTIVES,
+	        modal_1.MODAL_DIRECTVES,
 	        pagination_1.PAGINATION_DIRECTIVES,
 	        progressbar_1.PROGRESSBAR_DIRECTIVES,
 	        rating_1.RatingComponent,
@@ -4112,21 +4119,135 @@ webpackJsonp([2],[
 	        timepicker_1.TimepickerComponent,
 	        tooltip_1.TOOLTIP_DIRECTIVES,
 	        typeahead_1.TYPEAHEAD_DIRECTIVES
+	    ],
+	    providers: [
+	        components_helper_service_1.ComponentsHelper
 	    ]
 	};
 
 
 /***/ },
-/* 8 */,
-/* 9 */,
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	var _DOM = null;
+	function getDOM() {
+	    return _DOM;
+	}
+	exports.getDOM = getDOM;
+	function setDOM(adapter) {
+	    _DOM = adapter;
+	}
+	exports.setDOM = setDOM;
+	function setRootDomAdapter(adapter) {
+	    if (lang_1.isBlank(_DOM)) {
+	        _DOM = adapter;
+	    }
+	}
+	exports.setRootDomAdapter = setRootDomAdapter;
+	/* tslint:disable:requireParameterType */
+	/**
+	 * Provides DOM operations in an environment-agnostic way.
+	 */
+	var DomAdapter = (function () {
+	    function DomAdapter() {
+	        this.xhrType = null;
+	    }
+	    /** @deprecated */
+	    DomAdapter.prototype.getXHR = function () { return this.xhrType; };
+	    Object.defineProperty(DomAdapter.prototype, "attrToPropMap", {
+	        /**
+	         * Maps attribute names to their corresponding property names for cases
+	         * where attribute name doesn't match property name.
+	         */
+	        get: function () { return this._attrToPropMap; },
+	        set: function (value) { this._attrToPropMap = value; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    ;
+	    ;
+	    return DomAdapter;
+	}());
+	exports.DomAdapter = DomAdapter;
+	//# sourceMappingURL=dom_adapter.js.map
+
+/***/ },
 /* 10 */,
 /* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
-/* 15 */,
+/* 15 */
+[560, 6],
 /* 16 */,
-/* 17 */
+/* 17 */,
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var exceptions_1 = __webpack_require__(43);
+	var collection_1 = __webpack_require__(15);
+	exports.EVENT_MANAGER_PLUGINS = 
+	/*@ts2dart_const*/ new core_1.OpaqueToken("EventManagerPlugins");
+	var EventManager = (function () {
+	    function EventManager(plugins, _zone) {
+	        var _this = this;
+	        this._zone = _zone;
+	        plugins.forEach(function (p) { return p.manager = _this; });
+	        this._plugins = collection_1.ListWrapper.reversed(plugins);
+	    }
+	    EventManager.prototype.addEventListener = function (element, eventName, handler) {
+	        var plugin = this._findPluginFor(eventName);
+	        return plugin.addEventListener(element, eventName, handler);
+	    };
+	    EventManager.prototype.addGlobalEventListener = function (target, eventName, handler) {
+	        var plugin = this._findPluginFor(eventName);
+	        return plugin.addGlobalEventListener(target, eventName, handler);
+	    };
+	    EventManager.prototype.getZone = function () { return this._zone; };
+	    /** @internal */
+	    EventManager.prototype._findPluginFor = function (eventName) {
+	        var plugins = this._plugins;
+	        for (var i = 0; i < plugins.length; i++) {
+	            var plugin = plugins[i];
+	            if (plugin.supports(eventName)) {
+	                return plugin;
+	            }
+	        }
+	        throw new exceptions_1.BaseException("No event manager plugin found for event " + eventName);
+	    };
+	    EventManager.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    EventManager.ctorParameters = [
+	        { type: undefined, decorators: [{ type: core_1.Inject, args: [exports.EVENT_MANAGER_PLUGINS,] },] },
+	        { type: core_1.NgZone, },
+	    ];
+	    return EventManager;
+	}());
+	exports.EventManager = EventManager;
+	var EventManagerPlugin = (function () {
+	    function EventManagerPlugin() {
+	    }
+	    // That is equivalent to having supporting $event.target
+	    EventManagerPlugin.prototype.supports = function (eventName) { return false; };
+	    EventManagerPlugin.prototype.addEventListener = function (element, eventName, handler) {
+	        throw "not implemented";
+	    };
+	    EventManagerPlugin.prototype.addGlobalEventListener = function (element, eventName, handler) {
+	        throw "not implemented";
+	    };
+	    return EventManagerPlugin;
+	}());
+	exports.EventManagerPlugin = EventManagerPlugin;
+	//# sourceMappingURL=event_manager.js.map
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4158,14 +4279,124 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 18 */,
-/* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
 /* 24 */,
-/* 25 */
+/* 25 */,
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var core_private_1 = __webpack_require__(37);
+	var common_1 = __webpack_require__(3);
+	var dom_sanitization_service_1 = __webpack_require__(78);
+	var lang_1 = __webpack_require__(6);
+	var browser_adapter_1 = __webpack_require__(40);
+	var testability_1 = __webpack_require__(279);
+	var dom_adapter_1 = __webpack_require__(9);
+	var dom_tokens_1 = __webpack_require__(27);
+	var event_manager_1 = __webpack_require__(18);
+	var dom_renderer_1 = __webpack_require__(71);
+	var shared_styles_host_1 = __webpack_require__(42);
+	var key_events_1 = __webpack_require__(285);
+	var ng_probe_1 = __webpack_require__(41);
+	var dom_events_1 = __webpack_require__(72);
+	var hammer_gestures_1 = __webpack_require__(73);
+	var shared_styles_host_2 = __webpack_require__(42);
+	var animation_builder_1 = __webpack_require__(38);
+	var browser_details_1 = __webpack_require__(39);
+	var title_1 = __webpack_require__(280);
+	exports.Title = title_1.Title;
+	var browser_adapter_2 = __webpack_require__(40);
+	exports.BrowserDomAdapter = browser_adapter_2.BrowserDomAdapter;
+	var tools_1 = __webpack_require__(282);
+	exports.enableDebugTools = tools_1.enableDebugTools;
+	exports.disableDebugTools = tools_1.disableDebugTools;
+	var by_1 = __webpack_require__(283);
+	exports.By = by_1.By;
+	exports.BROWSER_PLATFORM_MARKER = 
+	/*@ts2dart_const*/ new core_1.OpaqueToken('BrowserPlatformMarker');
+	/**
+	 * A set of providers to initialize the Angular platform in a web browser.
+	 *
+	 * Used automatically by `bootstrap`, or can be passed to {@link platform}.
+	 */
+	exports.BROWSER_PROVIDERS = [
+	    /*@ts2dart_Provider*/ { provide: exports.BROWSER_PLATFORM_MARKER, useValue: true },
+	    core_1.PLATFORM_COMMON_PROVIDERS,
+	    /*@ts2dart_Provider*/ { provide: core_1.PLATFORM_INITIALIZER, useValue: initDomAdapter, multi: true },
+	];
+	function _exceptionHandler() {
+	    // !IS_DART is required because we must rethrow exceptions in JS,
+	    // but must not rethrow exceptions in Dart
+	    return new core_1.ExceptionHandler(dom_adapter_1.getDOM(), !lang_1.IS_DART);
+	}
+	function _document() {
+	    return dom_adapter_1.getDOM().defaultDoc();
+	}
+	exports.BROWSER_SANITIZATION_PROVIDERS = [
+	    /* @ts2dart_Provider */ { provide: core_private_1.SanitizationService, useExisting: dom_sanitization_service_1.DomSanitizationService },
+	    /* @ts2dart_Provider */ { provide: dom_sanitization_service_1.DomSanitizationService, useClass: dom_sanitization_service_1.DomSanitizationServiceImpl },
+	];
+	/**
+	 * A set of providers to initialize an Angular application in a web browser.
+	 *
+	 * Used automatically by `bootstrap`, or can be passed to {@link PlatformRef.application}.
+	 */
+	exports.BROWSER_APP_COMMON_PROVIDERS = 
+	/*@ts2dart_const*/ [
+	    core_1.APPLICATION_COMMON_PROVIDERS,
+	    common_1.FORM_PROVIDERS,
+	    exports.BROWSER_SANITIZATION_PROVIDERS,
+	    /* @ts2dart_Provider */ { provide: core_1.PLATFORM_PIPES, useValue: common_1.COMMON_PIPES, multi: true },
+	    /* @ts2dart_Provider */ { provide: core_1.PLATFORM_DIRECTIVES, useValue: common_1.COMMON_DIRECTIVES, multi: true },
+	    /* @ts2dart_Provider */ { provide: core_1.ExceptionHandler, useFactory: _exceptionHandler, deps: [] },
+	    /* @ts2dart_Provider */ { provide: dom_tokens_1.DOCUMENT, useFactory: _document, deps: [] },
+	    /* @ts2dart_Provider */ { provide: event_manager_1.EVENT_MANAGER_PLUGINS, useClass: dom_events_1.DomEventsPlugin, multi: true },
+	    /* @ts2dart_Provider */ { provide: event_manager_1.EVENT_MANAGER_PLUGINS, useClass: key_events_1.KeyEventsPlugin, multi: true },
+	    /* @ts2dart_Provider */ { provide: event_manager_1.EVENT_MANAGER_PLUGINS, useClass: hammer_gestures_1.HammerGesturesPlugin, multi: true },
+	    /* @ts2dart_Provider */ { provide: hammer_gestures_1.HAMMER_GESTURE_CONFIG, useClass: hammer_gestures_1.HammerGestureConfig },
+	    /* @ts2dart_Provider */ { provide: dom_renderer_1.DomRootRenderer, useClass: dom_renderer_1.DomRootRenderer_ },
+	    /* @ts2dart_Provider */ { provide: core_1.RootRenderer, useExisting: dom_renderer_1.DomRootRenderer },
+	    /* @ts2dart_Provider */ { provide: shared_styles_host_1.SharedStylesHost, useExisting: shared_styles_host_2.DomSharedStylesHost },
+	    shared_styles_host_2.DomSharedStylesHost,
+	    core_1.Testability,
+	    browser_details_1.BrowserDetails,
+	    animation_builder_1.AnimationBuilder,
+	    event_manager_1.EventManager,
+	    ng_probe_1.ELEMENT_PROBE_PROVIDERS
+	];
+	var hammer_gestures_2 = __webpack_require__(73);
+	exports.HAMMER_GESTURE_CONFIG = hammer_gestures_2.HAMMER_GESTURE_CONFIG;
+	exports.HammerGestureConfig = hammer_gestures_2.HammerGestureConfig;
+	function initDomAdapter() {
+	    browser_adapter_1.BrowserDomAdapter.makeCurrent();
+	    core_private_1.wtfInit();
+	    testability_1.BrowserGetTestability.init();
+	}
+	exports.initDomAdapter = initDomAdapter;
+	//# sourceMappingURL=browser_common.js.map
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	/**
+	 * A DI Token representing the main rendering context. In a browser this is the DOM Document.
+	 *
+	 * Note: Document might not be available in the Application Context when Application and Rendering
+	 * Contexts are not the same (e.g. when running the application into a Web Worker).
+	 */
+	exports.DOCUMENT = new core_1.OpaqueToken('DocumentToken');
+	//# sourceMappingURL=dom_tokens.js.map
+
+/***/ },
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4180,7 +4411,7 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var date_formatter_1 = __webpack_require__(267);
+	var date_formatter_1 = __webpack_require__(299);
 	var FORMAT_DAY = 'DD';
 	var FORMAT_MONTH = 'MMMM';
 	var FORMAT_YEAR = 'YYYY';
@@ -4210,7 +4441,6 @@ webpackJsonp([2],[
 	        },
 	        set: function (value) {
 	            this._activeDate = value;
-	            this.refreshView();
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -4243,6 +4473,8 @@ webpackJsonp([2],[
 	        else if (this.activeDate === undefined) {
 	            this.activeDate = new Date();
 	        }
+	    };
+	    DatePickerInnerComponent.prototype.ngOnChanges = function () {
 	        this.refreshView();
 	    };
 	    DatePickerInnerComponent.prototype.setCompareHandler = function (handler, type) {
@@ -4477,7 +4709,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 26 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4491,7 +4723,7 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var dropdown_service_1 = __webpack_require__(271);
+	var dropdown_service_1 = __webpack_require__(303);
 	var DropdownDirective = (function () {
 	    function DropdownDirective(el) {
 	        this.onToggle = new core_1.EventEmitter(false);
@@ -4629,7 +4861,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 27 */
+/* 30 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -4764,7 +4996,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 28 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4836,12 +5068,661 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 29 */,
-/* 30 */,
-/* 31 */,
 /* 32 */,
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	exports.RenderDebugInfo = core_1.__core_private__.RenderDebugInfo;
+	exports.wtfInit = core_1.__core_private__.wtfInit;
+	exports.ReflectionCapabilities = core_1.__core_private__.ReflectionCapabilities;
+	exports.VIEW_ENCAPSULATION_VALUES = core_1.__core_private__.VIEW_ENCAPSULATION_VALUES;
+	exports.DebugDomRootRenderer = core_1.__core_private__.DebugDomRootRenderer;
+	exports.SecurityContext = core_1.__core_private__.SecurityContext;
+	exports.SanitizationService = core_1.__core_private__.SanitizationService;
+	//# sourceMappingURL=core_private.js.map
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var css_animation_builder_1 = __webpack_require__(69);
+	var browser_details_1 = __webpack_require__(39);
+	var AnimationBuilder = (function () {
+	    /**
+	     * Used for DI
+	     * @param browserDetails
+	     */
+	    function AnimationBuilder(browserDetails) {
+	        this.browserDetails = browserDetails;
+	    }
+	    /**
+	     * Creates a new CSS Animation
+	     * @returns {CssAnimationBuilder}
+	     */
+	    AnimationBuilder.prototype.css = function () { return new css_animation_builder_1.CssAnimationBuilder(this.browserDetails); };
+	    AnimationBuilder.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    AnimationBuilder.ctorParameters = [
+	        { type: browser_details_1.BrowserDetails, },
+	    ];
+	    return AnimationBuilder;
+	}());
+	exports.AnimationBuilder = AnimationBuilder;
+	//# sourceMappingURL=animation_builder.js.map
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var math_1 = __webpack_require__(77);
+	var dom_adapter_1 = __webpack_require__(9);
+	var BrowserDetails = (function () {
+	    function BrowserDetails() {
+	        this.elapsedTimeIncludesDelay = false;
+	        this.doesElapsedTimeIncludesDelay();
+	    }
+	    /**
+	     * Determines if `event.elapsedTime` includes transition delay in the current browser.  At this
+	     * time, Chrome and Opera seem to be the only browsers that include this.
+	     */
+	    BrowserDetails.prototype.doesElapsedTimeIncludesDelay = function () {
+	        var _this = this;
+	        var div = dom_adapter_1.getDOM().createElement('div');
+	        dom_adapter_1.getDOM().setAttribute(div, 'style', "position: absolute; top: -9999px; left: -9999px; width: 1px;\n      height: 1px; transition: all 1ms linear 1ms;");
+	        // Firefox requires that we wait for 2 frames for some reason
+	        this.raf(function (timestamp) {
+	            dom_adapter_1.getDOM().on(div, 'transitionend', function (event) {
+	                var elapsed = math_1.Math.round(event.elapsedTime * 1000);
+	                _this.elapsedTimeIncludesDelay = elapsed == 2;
+	                dom_adapter_1.getDOM().remove(div);
+	            });
+	            dom_adapter_1.getDOM().setStyle(div, 'width', '2px');
+	        }, 2);
+	    };
+	    BrowserDetails.prototype.raf = function (callback, frames) {
+	        if (frames === void 0) { frames = 1; }
+	        var queue = new RafQueue(callback, frames);
+	        return function () { return queue.cancel(); };
+	    };
+	    BrowserDetails.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    BrowserDetails.ctorParameters = [];
+	    return BrowserDetails;
+	}());
+	exports.BrowserDetails = BrowserDetails;
+	var RafQueue = (function () {
+	    function RafQueue(callback, frames) {
+	        this.callback = callback;
+	        this.frames = frames;
+	        this._raf();
+	    }
+	    RafQueue.prototype._raf = function () {
+	        var _this = this;
+	        this.currentFrameId =
+	            dom_adapter_1.getDOM().requestAnimationFrame(function (timestamp) { return _this._nextFrame(timestamp); });
+	    };
+	    RafQueue.prototype._nextFrame = function (timestamp) {
+	        this.frames--;
+	        if (this.frames > 0) {
+	            this._raf();
+	        }
+	        else {
+	            this.callback(timestamp);
+	        }
+	    };
+	    RafQueue.prototype.cancel = function () {
+	        dom_adapter_1.getDOM().cancelAnimationFrame(this.currentFrameId);
+	        this.currentFrameId = null;
+	    };
+	    return RafQueue;
+	}());
+	//# sourceMappingURL=browser_details.js.map
+
+/***/ },
+/* 40 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var collection_1 = __webpack_require__(15);
+	var lang_1 = __webpack_require__(6);
+	var generic_browser_adapter_1 = __webpack_require__(277);
+	var dom_adapter_1 = __webpack_require__(9);
+	var _attrToPropMap = {
+	    'class': 'className',
+	    'innerHtml': 'innerHTML',
+	    'readonly': 'readOnly',
+	    'tabindex': 'tabIndex'
+	};
+	var DOM_KEY_LOCATION_NUMPAD = 3;
+	// Map to convert some key or keyIdentifier values to what will be returned by getEventKey
+	var _keyMap = {
+	    // The following values are here for cross-browser compatibility and to match the W3C standard
+	    // cf http://www.w3.org/TR/DOM-Level-3-Events-key/
+	    '\b': 'Backspace',
+	    '\t': 'Tab',
+	    '\x7F': 'Delete',
+	    '\x1B': 'Escape',
+	    'Del': 'Delete',
+	    'Esc': 'Escape',
+	    'Left': 'ArrowLeft',
+	    'Right': 'ArrowRight',
+	    'Up': 'ArrowUp',
+	    'Down': 'ArrowDown',
+	    'Menu': 'ContextMenu',
+	    'Scroll': 'ScrollLock',
+	    'Win': 'OS'
+	};
+	// There is a bug in Chrome for numeric keypad keys:
+	// https://code.google.com/p/chromium/issues/detail?id=155654
+	// 1, 2, 3 ... are reported as A, B, C ...
+	var _chromeNumKeyPadMap = {
+	    'A': '1',
+	    'B': '2',
+	    'C': '3',
+	    'D': '4',
+	    'E': '5',
+	    'F': '6',
+	    'G': '7',
+	    'H': '8',
+	    'I': '9',
+	    'J': '*',
+	    'K': '+',
+	    'M': '-',
+	    'N': '.',
+	    'O': '/',
+	    '\x60': '0',
+	    '\x90': 'NumLock'
+	};
+	/**
+	 * A `DomAdapter` powered by full browser DOM APIs.
+	 */
+	/* tslint:disable:requireParameterType */
+	var BrowserDomAdapter = (function (_super) {
+	    __extends(BrowserDomAdapter, _super);
+	    function BrowserDomAdapter() {
+	        _super.apply(this, arguments);
+	    }
+	    BrowserDomAdapter.prototype.parse = function (templateHtml) { throw new Error("parse not implemented"); };
+	    BrowserDomAdapter.makeCurrent = function () { dom_adapter_1.setRootDomAdapter(new BrowserDomAdapter()); };
+	    BrowserDomAdapter.prototype.hasProperty = function (element, name) { return name in element; };
+	    BrowserDomAdapter.prototype.setProperty = function (el, name, value) { el[name] = value; };
+	    BrowserDomAdapter.prototype.getProperty = function (el, name) { return el[name]; };
+	    BrowserDomAdapter.prototype.invoke = function (el, methodName, args) {
+	        el[methodName].apply(el, args);
+	    };
+	    // TODO(tbosch): move this into a separate environment class once we have it
+	    BrowserDomAdapter.prototype.logError = function (error) {
+	        if (window.console.error) {
+	            window.console.error(error);
+	        }
+	        else {
+	            window.console.log(error);
+	        }
+	    };
+	    BrowserDomAdapter.prototype.log = function (error) { window.console.log(error); };
+	    BrowserDomAdapter.prototype.logGroup = function (error) {
+	        if (window.console.group) {
+	            window.console.group(error);
+	            this.logError(error);
+	        }
+	        else {
+	            window.console.log(error);
+	        }
+	    };
+	    BrowserDomAdapter.prototype.logGroupEnd = function () {
+	        if (window.console.groupEnd) {
+	            window.console.groupEnd();
+	        }
+	    };
+	    Object.defineProperty(BrowserDomAdapter.prototype, "attrToPropMap", {
+	        get: function () { return _attrToPropMap; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    BrowserDomAdapter.prototype.query = function (selector) { return document.querySelector(selector); };
+	    BrowserDomAdapter.prototype.querySelector = function (el, selector) { return el.querySelector(selector); };
+	    BrowserDomAdapter.prototype.querySelectorAll = function (el, selector) { return el.querySelectorAll(selector); };
+	    BrowserDomAdapter.prototype.on = function (el, evt, listener) { el.addEventListener(evt, listener, false); };
+	    BrowserDomAdapter.prototype.onAndCancel = function (el, evt, listener) {
+	        el.addEventListener(evt, listener, false);
+	        // Needed to follow Dart's subscription semantic, until fix of
+	        // https://code.google.com/p/dart/issues/detail?id=17406
+	        return function () { el.removeEventListener(evt, listener, false); };
+	    };
+	    BrowserDomAdapter.prototype.dispatchEvent = function (el, evt) { el.dispatchEvent(evt); };
+	    BrowserDomAdapter.prototype.createMouseEvent = function (eventType) {
+	        var evt = document.createEvent('MouseEvent');
+	        evt.initEvent(eventType, true, true);
+	        return evt;
+	    };
+	    BrowserDomAdapter.prototype.createEvent = function (eventType) {
+	        var evt = document.createEvent('Event');
+	        evt.initEvent(eventType, true, true);
+	        return evt;
+	    };
+	    BrowserDomAdapter.prototype.preventDefault = function (evt) {
+	        evt.preventDefault();
+	        evt.returnValue = false;
+	    };
+	    BrowserDomAdapter.prototype.isPrevented = function (evt) {
+	        return evt.defaultPrevented || lang_1.isPresent(evt.returnValue) && !evt.returnValue;
+	    };
+	    BrowserDomAdapter.prototype.getInnerHTML = function (el) { return el.innerHTML; };
+	    BrowserDomAdapter.prototype.getOuterHTML = function (el) { return el.outerHTML; };
+	    BrowserDomAdapter.prototype.nodeName = function (node) { return node.nodeName; };
+	    BrowserDomAdapter.prototype.nodeValue = function (node) { return node.nodeValue; };
+	    BrowserDomAdapter.prototype.type = function (node) { return node.type; };
+	    BrowserDomAdapter.prototype.content = function (node) {
+	        if (this.hasProperty(node, "content")) {
+	            return node.content;
+	        }
+	        else {
+	            return node;
+	        }
+	    };
+	    BrowserDomAdapter.prototype.firstChild = function (el) { return el.firstChild; };
+	    BrowserDomAdapter.prototype.nextSibling = function (el) { return el.nextSibling; };
+	    BrowserDomAdapter.prototype.parentElement = function (el) { return el.parentNode; };
+	    BrowserDomAdapter.prototype.childNodes = function (el) { return el.childNodes; };
+	    BrowserDomAdapter.prototype.childNodesAsList = function (el) {
+	        var childNodes = el.childNodes;
+	        var res = collection_1.ListWrapper.createFixedSize(childNodes.length);
+	        for (var i = 0; i < childNodes.length; i++) {
+	            res[i] = childNodes[i];
+	        }
+	        return res;
+	    };
+	    BrowserDomAdapter.prototype.clearNodes = function (el) {
+	        while (el.firstChild) {
+	            el.removeChild(el.firstChild);
+	        }
+	    };
+	    BrowserDomAdapter.prototype.appendChild = function (el, node) { el.appendChild(node); };
+	    BrowserDomAdapter.prototype.removeChild = function (el, node) { el.removeChild(node); };
+	    BrowserDomAdapter.prototype.replaceChild = function (el, newChild, oldChild) { el.replaceChild(newChild, oldChild); };
+	    BrowserDomAdapter.prototype.remove = function (node) {
+	        if (node.parentNode) {
+	            node.parentNode.removeChild(node);
+	        }
+	        return node;
+	    };
+	    BrowserDomAdapter.prototype.insertBefore = function (el, node) { el.parentNode.insertBefore(node, el); };
+	    BrowserDomAdapter.prototype.insertAllBefore = function (el, nodes) { nodes.forEach(function (n) { return el.parentNode.insertBefore(n, el); }); };
+	    BrowserDomAdapter.prototype.insertAfter = function (el, node) { el.parentNode.insertBefore(node, el.nextSibling); };
+	    BrowserDomAdapter.prototype.setInnerHTML = function (el, value) { el.innerHTML = value; };
+	    BrowserDomAdapter.prototype.getText = function (el) { return el.textContent; };
+	    // TODO(vicb): removed Element type because it does not support StyleElement
+	    BrowserDomAdapter.prototype.setText = function (el, value) { el.textContent = value; };
+	    BrowserDomAdapter.prototype.getValue = function (el) { return el.value; };
+	    BrowserDomAdapter.prototype.setValue = function (el, value) { el.value = value; };
+	    BrowserDomAdapter.prototype.getChecked = function (el) { return el.checked; };
+	    BrowserDomAdapter.prototype.setChecked = function (el, value) { el.checked = value; };
+	    BrowserDomAdapter.prototype.createComment = function (text) { return document.createComment(text); };
+	    BrowserDomAdapter.prototype.createTemplate = function (html) {
+	        var t = document.createElement('template');
+	        t.innerHTML = html;
+	        return t;
+	    };
+	    BrowserDomAdapter.prototype.createElement = function (tagName, doc) {
+	        if (doc === void 0) { doc = document; }
+	        return doc.createElement(tagName);
+	    };
+	    BrowserDomAdapter.prototype.createElementNS = function (ns, tagName, doc) {
+	        if (doc === void 0) { doc = document; }
+	        return doc.createElementNS(ns, tagName);
+	    };
+	    BrowserDomAdapter.prototype.createTextNode = function (text, doc) {
+	        if (doc === void 0) { doc = document; }
+	        return doc.createTextNode(text);
+	    };
+	    BrowserDomAdapter.prototype.createScriptTag = function (attrName, attrValue, doc) {
+	        if (doc === void 0) { doc = document; }
+	        var el = doc.createElement('SCRIPT');
+	        el.setAttribute(attrName, attrValue);
+	        return el;
+	    };
+	    BrowserDomAdapter.prototype.createStyleElement = function (css, doc) {
+	        if (doc === void 0) { doc = document; }
+	        var style = doc.createElement('style');
+	        this.appendChild(style, this.createTextNode(css));
+	        return style;
+	    };
+	    BrowserDomAdapter.prototype.createShadowRoot = function (el) { return el.createShadowRoot(); };
+	    BrowserDomAdapter.prototype.getShadowRoot = function (el) { return el.shadowRoot; };
+	    BrowserDomAdapter.prototype.getHost = function (el) { return el.host; };
+	    BrowserDomAdapter.prototype.clone = function (node) { return node.cloneNode(true); };
+	    BrowserDomAdapter.prototype.getElementsByClassName = function (element, name) {
+	        return element.getElementsByClassName(name);
+	    };
+	    BrowserDomAdapter.prototype.getElementsByTagName = function (element, name) {
+	        return element.getElementsByTagName(name);
+	    };
+	    BrowserDomAdapter.prototype.classList = function (element) { return Array.prototype.slice.call(element.classList, 0); };
+	    BrowserDomAdapter.prototype.addClass = function (element, className) { element.classList.add(className); };
+	    BrowserDomAdapter.prototype.removeClass = function (element, className) { element.classList.remove(className); };
+	    BrowserDomAdapter.prototype.hasClass = function (element, className) { return element.classList.contains(className); };
+	    BrowserDomAdapter.prototype.setStyle = function (element, styleName, styleValue) {
+	        element.style[styleName] = styleValue;
+	    };
+	    BrowserDomAdapter.prototype.removeStyle = function (element, stylename) { element.style[stylename] = null; };
+	    BrowserDomAdapter.prototype.getStyle = function (element, stylename) { return element.style[stylename]; };
+	    BrowserDomAdapter.prototype.hasStyle = function (element, styleName, styleValue) {
+	        if (styleValue === void 0) { styleValue = null; }
+	        var value = this.getStyle(element, styleName) || '';
+	        return styleValue ? value == styleValue : value.length > 0;
+	    };
+	    BrowserDomAdapter.prototype.tagName = function (element) { return element.tagName; };
+	    BrowserDomAdapter.prototype.attributeMap = function (element) {
+	        var res = new Map();
+	        var elAttrs = element.attributes;
+	        for (var i = 0; i < elAttrs.length; i++) {
+	            var attrib = elAttrs[i];
+	            res.set(attrib.name, attrib.value);
+	        }
+	        return res;
+	    };
+	    BrowserDomAdapter.prototype.hasAttribute = function (element, attribute) { return element.hasAttribute(attribute); };
+	    BrowserDomAdapter.prototype.hasAttributeNS = function (element, ns, attribute) {
+	        return element.hasAttributeNS(ns, attribute);
+	    };
+	    BrowserDomAdapter.prototype.getAttribute = function (element, attribute) { return element.getAttribute(attribute); };
+	    BrowserDomAdapter.prototype.getAttributeNS = function (element, ns, name) {
+	        return element.getAttributeNS(ns, name);
+	    };
+	    BrowserDomAdapter.prototype.setAttribute = function (element, name, value) { element.setAttribute(name, value); };
+	    BrowserDomAdapter.prototype.setAttributeNS = function (element, ns, name, value) {
+	        element.setAttributeNS(ns, name, value);
+	    };
+	    BrowserDomAdapter.prototype.removeAttribute = function (element, attribute) { element.removeAttribute(attribute); };
+	    BrowserDomAdapter.prototype.removeAttributeNS = function (element, ns, name) { element.removeAttributeNS(ns, name); };
+	    BrowserDomAdapter.prototype.templateAwareRoot = function (el) { return this.isTemplateElement(el) ? this.content(el) : el; };
+	    BrowserDomAdapter.prototype.createHtmlDocument = function () {
+	        return document.implementation.createHTMLDocument('fakeTitle');
+	    };
+	    BrowserDomAdapter.prototype.defaultDoc = function () { return document; };
+	    BrowserDomAdapter.prototype.getBoundingClientRect = function (el) {
+	        try {
+	            return el.getBoundingClientRect();
+	        }
+	        catch (e) {
+	            return { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
+	        }
+	    };
+	    BrowserDomAdapter.prototype.getTitle = function () { return document.title; };
+	    BrowserDomAdapter.prototype.setTitle = function (newTitle) { document.title = newTitle || ''; };
+	    BrowserDomAdapter.prototype.elementMatches = function (n, selector) {
+	        var matches = false;
+	        if (n instanceof HTMLElement) {
+	            if (n.matches) {
+	                matches = n.matches(selector);
+	            }
+	            else if (n.msMatchesSelector) {
+	                matches = n.msMatchesSelector(selector);
+	            }
+	            else if (n.webkitMatchesSelector) {
+	                matches = n.webkitMatchesSelector(selector);
+	            }
+	        }
+	        return matches;
+	    };
+	    BrowserDomAdapter.prototype.isTemplateElement = function (el) {
+	        return el instanceof HTMLElement && el.nodeName == "TEMPLATE";
+	    };
+	    BrowserDomAdapter.prototype.isTextNode = function (node) { return node.nodeType === Node.TEXT_NODE; };
+	    BrowserDomAdapter.prototype.isCommentNode = function (node) { return node.nodeType === Node.COMMENT_NODE; };
+	    BrowserDomAdapter.prototype.isElementNode = function (node) { return node.nodeType === Node.ELEMENT_NODE; };
+	    BrowserDomAdapter.prototype.hasShadowRoot = function (node) { return node instanceof HTMLElement && lang_1.isPresent(node.shadowRoot); };
+	    BrowserDomAdapter.prototype.isShadowRoot = function (node) { return node instanceof DocumentFragment; };
+	    BrowserDomAdapter.prototype.importIntoDoc = function (node) {
+	        var toImport = node;
+	        if (this.isTemplateElement(node)) {
+	            toImport = this.content(node);
+	        }
+	        return document.importNode(toImport, true);
+	    };
+	    BrowserDomAdapter.prototype.adoptNode = function (node) { return document.adoptNode(node); };
+	    BrowserDomAdapter.prototype.getHref = function (el) { return el.href; };
+	    BrowserDomAdapter.prototype.getEventKey = function (event) {
+	        var key = event.key;
+	        if (lang_1.isBlank(key)) {
+	            key = event.keyIdentifier;
+	            // keyIdentifier is defined in the old draft of DOM Level 3 Events implemented by Chrome and
+	            // Safari
+	            // cf
+	            // http://www.w3.org/TR/2007/WD-DOM-Level-3-Events-20071221/events.html#Events-KeyboardEvents-Interfaces
+	            if (lang_1.isBlank(key)) {
+	                return 'Unidentified';
+	            }
+	            if (key.startsWith('U+')) {
+	                key = String.fromCharCode(parseInt(key.substring(2), 16));
+	                if (event.location === DOM_KEY_LOCATION_NUMPAD && _chromeNumKeyPadMap.hasOwnProperty(key)) {
+	                    // There is a bug in Chrome for numeric keypad keys:
+	                    // https://code.google.com/p/chromium/issues/detail?id=155654
+	                    // 1, 2, 3 ... are reported as A, B, C ...
+	                    key = _chromeNumKeyPadMap[key];
+	                }
+	            }
+	        }
+	        if (_keyMap.hasOwnProperty(key)) {
+	            key = _keyMap[key];
+	        }
+	        return key;
+	    };
+	    BrowserDomAdapter.prototype.getGlobalEventTarget = function (target) {
+	        if (target == "window") {
+	            return window;
+	        }
+	        else if (target == "document") {
+	            return document;
+	        }
+	        else if (target == "body") {
+	            return document.body;
+	        }
+	    };
+	    BrowserDomAdapter.prototype.getHistory = function () { return window.history; };
+	    BrowserDomAdapter.prototype.getLocation = function () { return window.location; };
+	    BrowserDomAdapter.prototype.getBaseHref = function () {
+	        var href = getBaseElementHref();
+	        if (lang_1.isBlank(href)) {
+	            return null;
+	        }
+	        return relativePath(href);
+	    };
+	    BrowserDomAdapter.prototype.resetBaseElement = function () { baseElement = null; };
+	    BrowserDomAdapter.prototype.getUserAgent = function () { return window.navigator.userAgent; };
+	    BrowserDomAdapter.prototype.setData = function (element, name, value) {
+	        this.setAttribute(element, 'data-' + name, value);
+	    };
+	    BrowserDomAdapter.prototype.getData = function (element, name) { return this.getAttribute(element, 'data-' + name); };
+	    BrowserDomAdapter.prototype.getComputedStyle = function (element) { return getComputedStyle(element); };
+	    // TODO(tbosch): move this into a separate environment class once we have it
+	    BrowserDomAdapter.prototype.setGlobalVar = function (path, value) { lang_1.setValueOnPath(lang_1.global, path, value); };
+	    BrowserDomAdapter.prototype.requestAnimationFrame = function (callback) { return window.requestAnimationFrame(callback); };
+	    BrowserDomAdapter.prototype.cancelAnimationFrame = function (id) { window.cancelAnimationFrame(id); };
+	    BrowserDomAdapter.prototype.performanceNow = function () {
+	        // performance.now() is not available in all browsers, see
+	        // http://caniuse.com/#search=performance.now
+	        if (lang_1.isPresent(window.performance) && lang_1.isPresent(window.performance.now)) {
+	            return window.performance.now();
+	        }
+	        else {
+	            return lang_1.DateWrapper.toMillis(lang_1.DateWrapper.now());
+	        }
+	    };
+	    return BrowserDomAdapter;
+	}(generic_browser_adapter_1.GenericBrowserDomAdapter));
+	exports.BrowserDomAdapter = BrowserDomAdapter;
+	var baseElement = null;
+	function getBaseElementHref() {
+	    if (lang_1.isBlank(baseElement)) {
+	        baseElement = document.querySelector('base');
+	        if (lang_1.isBlank(baseElement)) {
+	            return null;
+	        }
+	    }
+	    return baseElement.getAttribute('href');
+	}
+	// based on urlUtils.js in AngularJS 1
+	var urlParsingNode = null;
+	function relativePath(url) {
+	    if (lang_1.isBlank(urlParsingNode)) {
+	        urlParsingNode = document.createElement("a");
+	    }
+	    urlParsingNode.setAttribute('href', url);
+	    return (urlParsingNode.pathname.charAt(0) === '/') ? urlParsingNode.pathname :
+	        '/' + urlParsingNode.pathname;
+	}
+	//# sourceMappingURL=browser_adapter.js.map
+
+/***/ },
+/* 41 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var core_private_1 = __webpack_require__(37);
+	var lang_1 = __webpack_require__(6);
+	var dom_adapter_1 = __webpack_require__(9);
+	var dom_renderer_1 = __webpack_require__(71);
+	var CORE_TOKENS = { 'ApplicationRef': core_1.ApplicationRef, 'NgZone': core_1.NgZone };
+	var INSPECT_GLOBAL_NAME = 'ng.probe';
+	var CORE_TOKENS_GLOBAL_NAME = 'ng.coreTokens';
+	/**
+	 * Returns a {@link DebugElement} for the given native DOM element, or
+	 * null if the given native element does not have an Angular view associated
+	 * with it.
+	 */
+	function inspectNativeElement(element) {
+	    return core_1.getDebugNode(element);
+	}
+	exports.inspectNativeElement = inspectNativeElement;
+	function _createConditionalRootRenderer(rootRenderer) {
+	    if (lang_1.assertionsEnabled()) {
+	        return _createRootRenderer(rootRenderer);
+	    }
+	    return rootRenderer;
+	}
+	function _createRootRenderer(rootRenderer) {
+	    dom_adapter_1.getDOM().setGlobalVar(INSPECT_GLOBAL_NAME, inspectNativeElement);
+	    dom_adapter_1.getDOM().setGlobalVar(CORE_TOKENS_GLOBAL_NAME, CORE_TOKENS);
+	    return new core_private_1.DebugDomRootRenderer(rootRenderer);
+	}
+	/**
+	 * Providers which support debugging Angular applications (e.g. via `ng.probe`).
+	 */
+	exports.ELEMENT_PROBE_PROVIDERS = [
+	    /*@ts2dart_Provider*/ {
+	        provide: core_1.RootRenderer,
+	        useFactory: _createConditionalRootRenderer,
+	        deps: [dom_renderer_1.DomRootRenderer]
+	    }
+	];
+	exports.ELEMENT_PROBE_PROVIDERS_PROD_MODE = [
+	    /*@ts2dart_Provider*/ {
+	        provide: core_1.RootRenderer,
+	        useFactory: _createRootRenderer,
+	        deps: [dom_renderer_1.DomRootRenderer]
+	    }
+	];
+	//# sourceMappingURL=ng_probe.js.map
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var collection_1 = __webpack_require__(15);
+	var dom_adapter_1 = __webpack_require__(9);
+	var dom_tokens_1 = __webpack_require__(27);
+	var SharedStylesHost = (function () {
+	    function SharedStylesHost() {
+	        /** @internal */
+	        this._styles = [];
+	        /** @internal */
+	        this._stylesSet = new Set();
+	    }
+	    SharedStylesHost.prototype.addStyles = function (styles) {
+	        var _this = this;
+	        var additions = [];
+	        styles.forEach(function (style) {
+	            if (!collection_1.SetWrapper.has(_this._stylesSet, style)) {
+	                _this._stylesSet.add(style);
+	                _this._styles.push(style);
+	                additions.push(style);
+	            }
+	        });
+	        this.onStylesAdded(additions);
+	    };
+	    SharedStylesHost.prototype.onStylesAdded = function (additions) { };
+	    SharedStylesHost.prototype.getAllStyles = function () { return this._styles; };
+	    SharedStylesHost.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    SharedStylesHost.ctorParameters = [];
+	    return SharedStylesHost;
+	}());
+	exports.SharedStylesHost = SharedStylesHost;
+	var DomSharedStylesHost = (function (_super) {
+	    __extends(DomSharedStylesHost, _super);
+	    function DomSharedStylesHost(doc) {
+	        _super.call(this);
+	        this._hostNodes = new Set();
+	        this._hostNodes.add(doc.head);
+	    }
+	    /** @internal */
+	    DomSharedStylesHost.prototype._addStylesToHost = function (styles, host) {
+	        for (var i = 0; i < styles.length; i++) {
+	            var style = styles[i];
+	            dom_adapter_1.getDOM().appendChild(host, dom_adapter_1.getDOM().createStyleElement(style));
+	        }
+	    };
+	    DomSharedStylesHost.prototype.addHost = function (hostNode) {
+	        this._addStylesToHost(this._styles, hostNode);
+	        this._hostNodes.add(hostNode);
+	    };
+	    DomSharedStylesHost.prototype.removeHost = function (hostNode) { collection_1.SetWrapper.delete(this._hostNodes, hostNode); };
+	    DomSharedStylesHost.prototype.onStylesAdded = function (additions) {
+	        var _this = this;
+	        this._hostNodes.forEach(function (hostNode) { _this._addStylesToHost(additions, hostNode); });
+	    };
+	    DomSharedStylesHost.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    DomSharedStylesHost.ctorParameters = [
+	        { type: undefined, decorators: [{ type: core_1.Inject, args: [dom_tokens_1.DOCUMENT,] },] },
+	    ];
+	    return DomSharedStylesHost;
+	}(SharedStylesHost));
+	exports.DomSharedStylesHost = DomSharedStylesHost;
+	//# sourceMappingURL=shared_styles_host.js.map
+
+/***/ },
+/* 43 */
+[562, 75, 76, 76],
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4900,7 +5781,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 35 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4915,7 +5796,7 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var ng2_bootstrap_config_1 = __webpack_require__(17);
+	var ng2_bootstrap_config_1 = __webpack_require__(19);
 	(function (Direction) {
 	    Direction[Direction["UNKNOWN"] = 0] = "UNKNOWN";
 	    Direction[Direction["NEXT"] = 1] = "NEXT";
@@ -5089,16 +5970,16 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 36 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var collapse_directive_1 = __webpack_require__(266);
+	var collapse_directive_1 = __webpack_require__(298);
 	exports.CollapseDirective = collapse_directive_1.CollapseDirective;
 
 
 /***/ },
-/* 37 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5116,10 +5997,10 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var datepicker_inner_component_1 = __webpack_require__(25);
-	var daypicker_component_1 = __webpack_require__(268);
-	var monthpicker_component_1 = __webpack_require__(269);
-	var yearpicker_component_1 = __webpack_require__(270);
+	var datepicker_inner_component_1 = __webpack_require__(28);
+	var daypicker_component_1 = __webpack_require__(300);
+	var monthpicker_component_1 = __webpack_require__(301);
+	var yearpicker_component_1 = __webpack_require__(302);
 	var DatePickerComponent = (function () {
 	    function DatePickerComponent(cd) {
 	        this.onChange = Function.prototype;
@@ -5250,7 +6131,78 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 38 */
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(2);
+	var common_1 = __webpack_require__(3);
+	var modal_options_class_1 = __webpack_require__(49);
+	var ModalBackdropOptions = (function () {
+	    function ModalBackdropOptions(options) {
+	        this.animate = true;
+	        Object.assign(this, options);
+	    }
+	    return ModalBackdropOptions;
+	}());
+	exports.ModalBackdropOptions = ModalBackdropOptions;
+	var ModalBackdropComponent = (function () {
+	    function ModalBackdropComponent(options, element) {
+	        this.isAnimated = true;
+	        this.isShown = false;
+	        this.isAnimated = options.animate;
+	        this.element = element;
+	    }
+	    ModalBackdropComponent = __decorate([
+	        core_1.Component({
+	            selector: 'bs-modal-backdrop',
+	            directives: [common_1.NgClass],
+	            template: "\n<div class=\"" + modal_options_class_1.ClassName.BACKDROP + "\"\n  [class." + modal_options_class_1.ClassName.IN + "]=\"isShown\"\n  [class." + modal_options_class_1.ClassName.FADE + "]=\"isAnimated\"></div>"
+	        }), 
+	        __metadata('design:paramtypes', [ModalBackdropOptions, core_1.ElementRef])
+	    ], ModalBackdropComponent);
+	    return ModalBackdropComponent;
+	}());
+	exports.ModalBackdropComponent = ModalBackdropComponent;
+
+
+/***/ },
+/* 49 */
+/***/ function(module, exports) {
+
+	"use strict";
+	exports.modalConfigDefaults = {
+	    backdrop: true,
+	    keyboard: true,
+	    focus: true,
+	    show: true
+	};
+	exports.ClassName = {
+	    SCROLLBAR_MEASURER: 'modal-scrollbar-measure',
+	    BACKDROP: 'modal-backdrop',
+	    OPEN: 'modal-open',
+	    FADE: 'fade',
+	    IN: 'in'
+	};
+	exports.Selector = {
+	    DIALOG: '.modal-dialog',
+	    DATA_TOGGLE: '[data-toggle="modal"]',
+	    DATA_DISMISS: '[data-dismiss="modal"]',
+	    FIXED_CONTENT: '.navbar-fixed-top, .navbar-fixed-bottom, .is-fixed'
+	};
+
+
+/***/ },
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5512,7 +6464,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 39 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5530,7 +6482,7 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var progress_directive_1 = __webpack_require__(28);
+	var progress_directive_1 = __webpack_require__(31);
 	var BarComponent = (function () {
 	    function BarComponent(progress) {
 	        this.percent = 0;
@@ -5588,7 +6540,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 40 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5602,7 +6554,7 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var tabset_component_1 = __webpack_require__(41);
+	var tabset_component_1 = __webpack_require__(53);
 	var TabDirective = (function () {
 	    function TabDirective(tabset) {
 	        this.select = new core_1.EventEmitter(false);
@@ -5683,7 +6635,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 41 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5698,7 +6650,7 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var common_2 = __webpack_require__(167);
+	var common_2 = __webpack_require__(189);
 	var TabsetComponent = (function () {
 	    function TabsetComponent() {
 	        this.clazz = true;
@@ -5826,7 +6778,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 42 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5844,8 +6796,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var position_1 = __webpack_require__(27);
-	var tooltip_options_class_1 = __webpack_require__(182);
+	var position_1 = __webpack_require__(30);
+	var tooltip_options_class_1 = __webpack_require__(206);
 	var TooltipContainerComponent = (function () {
 	    function TooltipContainerComponent(element, cdr, options) {
 	        this.top = '-1000px';
@@ -5856,6 +6808,7 @@ webpackJsonp([2],[
 	        Object.assign(this, options);
 	        this.classMap = { 'in': false, 'fade': false };
 	        this.classMap[options.placement] = true;
+	        this.classMap['tooltip-' + options.placement] = true;
 	    }
 	    TooltipContainerComponent.prototype.ngAfterViewInit = function () {
 	        var p = position_1.positionService
@@ -5883,7 +6836,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 43 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5898,10 +6851,10 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var typeahead_utils_1 = __webpack_require__(185);
-	var typeahead_options_class_1 = __webpack_require__(44);
-	var position_1 = __webpack_require__(27);
-	var ng2_bootstrap_config_1 = __webpack_require__(17);
+	var typeahead_utils_1 = __webpack_require__(209);
+	var typeahead_options_class_1 = __webpack_require__(56);
+	var position_1 = __webpack_require__(30);
+	var ng2_bootstrap_config_1 = __webpack_require__(19);
 	var TEMPLATE = (_a = {},
 	    _a[ng2_bootstrap_config_1.Ng2BootstrapTheme.BS4] = "\n  <div class=\"dropdown-menu\"\n       style=\"display: block\"\n      [ngStyle]=\"{top: top, left: left, display: display}\"\n      (mouseleave)=\"focusLost()\">\n      <a href=\"#\"\n         *ngFor=\"let match of matches\"\n         class=\"dropdown-item\"\n         (click)=\"selectMatch(match, $event)\"\n         (mouseenter)=\"selectActive(match)\"\n         [class.active]=\"isActive(match)\"\n         [innerHtml]=\"hightlight(match, query)\"></a>\n  </div>\n  ",
 	    _a[ng2_bootstrap_config_1.Ng2BootstrapTheme.BS3] = "\n  <ul class=\"dropdown-menu\"\n      style=\"display: block\"\n      [ngStyle]=\"{top: top, left: left, display: display}\"\n      (mouseleave)=\"focusLost()\">\n    <li *ngFor=\"let match of matches\"\n        [class.active]=\"isActive(match)\"\n        (mouseenter)=\"selectActive(match)\">\n        <a href=\"#\" (click)=\"selectMatch(match, $event)\" tabindex=\"-1\" [innerHtml]=\"hightlight(match, query)\"></a>\n    </li>\n  </ul>\n  ",
@@ -6025,7 +6978,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 44 */
+/* 56 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6039,19 +6992,941 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	var math_1 = __webpack_require__(77);
+	var collection_1 = __webpack_require__(15);
+	var util_1 = __webpack_require__(74);
+	var dom_adapter_1 = __webpack_require__(9);
+	var Animation = (function () {
+	    /**
+	     * Stores the start time and starts the animation
+	     * @param element
+	     * @param data
+	     * @param browserDetails
+	     */
+	    function Animation(element, data, browserDetails) {
+	        var _this = this;
+	        this.element = element;
+	        this.data = data;
+	        this.browserDetails = browserDetails;
+	        /** functions to be called upon completion */
+	        this.callbacks = [];
+	        /** functions for removing event listeners */
+	        this.eventClearFunctions = [];
+	        /** flag used to track whether or not the animation has finished */
+	        this.completed = false;
+	        this._stringPrefix = '';
+	        this.startTime = lang_1.DateWrapper.toMillis(lang_1.DateWrapper.now());
+	        this._stringPrefix = dom_adapter_1.getDOM().getAnimationPrefix();
+	        this.setup();
+	        this.wait(function (timestamp) { return _this.start(); });
+	    }
+	    Object.defineProperty(Animation.prototype, "totalTime", {
+	        /** total amount of time that the animation should take including delay */
+	        get: function () {
+	            var delay = this.computedDelay != null ? this.computedDelay : 0;
+	            var duration = this.computedDuration != null ? this.computedDuration : 0;
+	            return delay + duration;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Animation.prototype.wait = function (callback) {
+	        // Firefox requires 2 frames for some reason
+	        this.browserDetails.raf(callback, 2);
+	    };
+	    /**
+	     * Sets up the initial styles before the animation is started
+	     */
+	    Animation.prototype.setup = function () {
+	        if (this.data.fromStyles != null)
+	            this.applyStyles(this.data.fromStyles);
+	        if (this.data.duration != null)
+	            this.applyStyles({ 'transitionDuration': this.data.duration.toString() + 'ms' });
+	        if (this.data.delay != null)
+	            this.applyStyles({ 'transitionDelay': this.data.delay.toString() + 'ms' });
+	    };
+	    /**
+	     * After the initial setup has occurred, this method adds the animation styles
+	     */
+	    Animation.prototype.start = function () {
+	        this.addClasses(this.data.classesToAdd);
+	        this.addClasses(this.data.animationClasses);
+	        this.removeClasses(this.data.classesToRemove);
+	        if (this.data.toStyles != null)
+	            this.applyStyles(this.data.toStyles);
+	        var computedStyles = dom_adapter_1.getDOM().getComputedStyle(this.element);
+	        this.computedDelay =
+	            math_1.Math.max(this.parseDurationString(computedStyles.getPropertyValue(this._stringPrefix + 'transition-delay')), this.parseDurationString(this.element.style.getPropertyValue(this._stringPrefix + 'transition-delay')));
+	        this.computedDuration = math_1.Math.max(this.parseDurationString(computedStyles.getPropertyValue(this._stringPrefix + 'transition-duration')), this.parseDurationString(this.element.style.getPropertyValue(this._stringPrefix + 'transition-duration')));
+	        this.addEvents();
+	    };
+	    /**
+	     * Applies the provided styles to the element
+	     * @param styles
+	     */
+	    Animation.prototype.applyStyles = function (styles) {
+	        var _this = this;
+	        collection_1.StringMapWrapper.forEach(styles, function (value, key) {
+	            var dashCaseKey = util_1.camelCaseToDashCase(key);
+	            if (lang_1.isPresent(dom_adapter_1.getDOM().getStyle(_this.element, dashCaseKey))) {
+	                dom_adapter_1.getDOM().setStyle(_this.element, dashCaseKey, value.toString());
+	            }
+	            else {
+	                dom_adapter_1.getDOM().setStyle(_this.element, _this._stringPrefix + dashCaseKey, value.toString());
+	            }
+	        });
+	    };
+	    /**
+	     * Adds the provided classes to the element
+	     * @param classes
+	     */
+	    Animation.prototype.addClasses = function (classes) {
+	        for (var i = 0, len = classes.length; i < len; i++)
+	            dom_adapter_1.getDOM().addClass(this.element, classes[i]);
+	    };
+	    /**
+	     * Removes the provided classes from the element
+	     * @param classes
+	     */
+	    Animation.prototype.removeClasses = function (classes) {
+	        for (var i = 0, len = classes.length; i < len; i++)
+	            dom_adapter_1.getDOM().removeClass(this.element, classes[i]);
+	    };
+	    /**
+	     * Adds events to track when animations have finished
+	     */
+	    Animation.prototype.addEvents = function () {
+	        var _this = this;
+	        if (this.totalTime > 0) {
+	            this.eventClearFunctions.push(dom_adapter_1.getDOM().onAndCancel(this.element, dom_adapter_1.getDOM().getTransitionEnd(), function (event) { return _this.handleAnimationEvent(event); }));
+	        }
+	        else {
+	            this.handleAnimationCompleted();
+	        }
+	    };
+	    Animation.prototype.handleAnimationEvent = function (event) {
+	        var elapsedTime = math_1.Math.round(event.elapsedTime * 1000);
+	        if (!this.browserDetails.elapsedTimeIncludesDelay)
+	            elapsedTime += this.computedDelay;
+	        event.stopPropagation();
+	        if (elapsedTime >= this.totalTime)
+	            this.handleAnimationCompleted();
+	    };
+	    /**
+	     * Runs all animation callbacks and removes temporary classes
+	     */
+	    Animation.prototype.handleAnimationCompleted = function () {
+	        this.removeClasses(this.data.animationClasses);
+	        this.callbacks.forEach(function (callback) { return callback(); });
+	        this.callbacks = [];
+	        this.eventClearFunctions.forEach(function (fn) { return fn(); });
+	        this.eventClearFunctions = [];
+	        this.completed = true;
+	    };
+	    /**
+	     * Adds animation callbacks to be called upon completion
+	     * @param callback
+	     * @returns {Animation}
+	     */
+	    Animation.prototype.onComplete = function (callback) {
+	        if (this.completed) {
+	            callback();
+	        }
+	        else {
+	            this.callbacks.push(callback);
+	        }
+	        return this;
+	    };
+	    /**
+	     * Converts the duration string to the number of milliseconds
+	     * @param duration
+	     * @returns {number}
+	     */
+	    Animation.prototype.parseDurationString = function (duration) {
+	        var maxValue = 0;
+	        // duration must have at least 2 characters to be valid. (number + type)
+	        if (duration == null || duration.length < 2) {
+	            return maxValue;
+	        }
+	        else if (duration.substring(duration.length - 2) == 'ms') {
+	            var value = lang_1.NumberWrapper.parseInt(this.stripLetters(duration), 10);
+	            if (value > maxValue)
+	                maxValue = value;
+	        }
+	        else if (duration.substring(duration.length - 1) == 's') {
+	            var ms = lang_1.NumberWrapper.parseFloat(this.stripLetters(duration)) * 1000;
+	            var value = math_1.Math.floor(ms);
+	            if (value > maxValue)
+	                maxValue = value;
+	        }
+	        return maxValue;
+	    };
+	    /**
+	     * Strips the letters from the duration string
+	     * @param str
+	     * @returns {string}
+	     */
+	    Animation.prototype.stripLetters = function (str) {
+	        return lang_1.StringWrapper.replaceAll(str, lang_1.RegExpWrapper.create('[^0-9]+$', ''), '');
+	    };
+	    return Animation;
+	}());
+	exports.Animation = Animation;
+	//# sourceMappingURL=animation.js.map
+
+/***/ },
+/* 69 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var css_animation_options_1 = __webpack_require__(70);
+	var animation_1 = __webpack_require__(68);
+	var CssAnimationBuilder = (function () {
+	    /**
+	     * Accepts public properties for CssAnimationBuilder
+	     */
+	    function CssAnimationBuilder(browserDetails) {
+	        this.browserDetails = browserDetails;
+	        /** @type {CssAnimationOptions} */
+	        this.data = new css_animation_options_1.CssAnimationOptions();
+	    }
+	    /**
+	     * Adds a temporary class that will be removed at the end of the animation
+	     * @param className
+	     */
+	    CssAnimationBuilder.prototype.addAnimationClass = function (className) {
+	        this.data.animationClasses.push(className);
+	        return this;
+	    };
+	    /**
+	     * Adds a class that will remain on the element after the animation has finished
+	     * @param className
+	     */
+	    CssAnimationBuilder.prototype.addClass = function (className) {
+	        this.data.classesToAdd.push(className);
+	        return this;
+	    };
+	    /**
+	     * Removes a class from the element
+	     * @param className
+	     */
+	    CssAnimationBuilder.prototype.removeClass = function (className) {
+	        this.data.classesToRemove.push(className);
+	        return this;
+	    };
+	    /**
+	     * Sets the animation duration (and overrides any defined through CSS)
+	     * @param duration
+	     */
+	    CssAnimationBuilder.prototype.setDuration = function (duration) {
+	        this.data.duration = duration;
+	        return this;
+	    };
+	    /**
+	     * Sets the animation delay (and overrides any defined through CSS)
+	     * @param delay
+	     */
+	    CssAnimationBuilder.prototype.setDelay = function (delay) {
+	        this.data.delay = delay;
+	        return this;
+	    };
+	    /**
+	     * Sets styles for both the initial state and the destination state
+	     * @param from
+	     * @param to
+	     */
+	    CssAnimationBuilder.prototype.setStyles = function (from, to) {
+	        return this.setFromStyles(from).setToStyles(to);
+	    };
+	    /**
+	     * Sets the initial styles for the animation
+	     * @param from
+	     */
+	    CssAnimationBuilder.prototype.setFromStyles = function (from) {
+	        this.data.fromStyles = from;
+	        return this;
+	    };
+	    /**
+	     * Sets the destination styles for the animation
+	     * @param to
+	     */
+	    CssAnimationBuilder.prototype.setToStyles = function (to) {
+	        this.data.toStyles = to;
+	        return this;
+	    };
+	    /**
+	     * Starts the animation and returns a promise
+	     * @param element
+	     */
+	    CssAnimationBuilder.prototype.start = function (element) {
+	        return new animation_1.Animation(element, this.data, this.browserDetails);
+	    };
+	    return CssAnimationBuilder;
+	}());
+	exports.CssAnimationBuilder = CssAnimationBuilder;
+	//# sourceMappingURL=css_animation_builder.js.map
+
+/***/ },
+/* 70 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var CssAnimationOptions = (function () {
+	    function CssAnimationOptions() {
+	        /** classes to be added to the element */
+	        this.classesToAdd = [];
+	        /** classes to be removed from the element */
+	        this.classesToRemove = [];
+	        /** classes to be added for the duration of the animation */
+	        this.animationClasses = [];
+	    }
+	    return CssAnimationOptions;
+	}());
+	exports.CssAnimationOptions = CssAnimationOptions;
+	//# sourceMappingURL=css_animation_options.js.map
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var animation_builder_1 = __webpack_require__(38);
+	var lang_1 = __webpack_require__(6);
+	var exceptions_1 = __webpack_require__(43);
+	var shared_styles_host_1 = __webpack_require__(42);
+	var event_manager_1 = __webpack_require__(18);
+	var dom_tokens_1 = __webpack_require__(27);
+	var dom_adapter_1 = __webpack_require__(9);
+	var util_1 = __webpack_require__(74);
+	var NAMESPACE_URIS = 
+	/*@ts2dart_const*/
+	{ 'xlink': 'http://www.w3.org/1999/xlink', 'svg': 'http://www.w3.org/2000/svg' };
+	var TEMPLATE_COMMENT_TEXT = 'template bindings={}';
+	var TEMPLATE_BINDINGS_EXP = /^template bindings=(.*)$/g;
+	var DomRootRenderer = (function () {
+	    function DomRootRenderer(document, eventManager, sharedStylesHost, animate) {
+	        this.document = document;
+	        this.eventManager = eventManager;
+	        this.sharedStylesHost = sharedStylesHost;
+	        this.animate = animate;
+	        this._registeredComponents = new Map();
+	    }
+	    DomRootRenderer.prototype.renderComponent = function (componentProto) {
+	        var renderer = this._registeredComponents.get(componentProto.id);
+	        if (lang_1.isBlank(renderer)) {
+	            renderer = new DomRenderer(this, componentProto);
+	            this._registeredComponents.set(componentProto.id, renderer);
+	        }
+	        return renderer;
+	    };
+	    return DomRootRenderer;
+	}());
+	exports.DomRootRenderer = DomRootRenderer;
+	var DomRootRenderer_ = (function (_super) {
+	    __extends(DomRootRenderer_, _super);
+	    function DomRootRenderer_(_document, _eventManager, sharedStylesHost, animate) {
+	        _super.call(this, _document, _eventManager, sharedStylesHost, animate);
+	    }
+	    DomRootRenderer_.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    DomRootRenderer_.ctorParameters = [
+	        { type: undefined, decorators: [{ type: core_1.Inject, args: [dom_tokens_1.DOCUMENT,] },] },
+	        { type: event_manager_1.EventManager, },
+	        { type: shared_styles_host_1.DomSharedStylesHost, },
+	        { type: animation_builder_1.AnimationBuilder, },
+	    ];
+	    return DomRootRenderer_;
+	}(DomRootRenderer));
+	exports.DomRootRenderer_ = DomRootRenderer_;
+	var DomRenderer = (function () {
+	    function DomRenderer(_rootRenderer, componentProto) {
+	        this._rootRenderer = _rootRenderer;
+	        this.componentProto = componentProto;
+	        this._styles = _flattenStyles(componentProto.id, componentProto.styles, []);
+	        if (componentProto.encapsulation !== core_1.ViewEncapsulation.Native) {
+	            this._rootRenderer.sharedStylesHost.addStyles(this._styles);
+	        }
+	        if (this.componentProto.encapsulation === core_1.ViewEncapsulation.Emulated) {
+	            this._contentAttr = _shimContentAttribute(componentProto.id);
+	            this._hostAttr = _shimHostAttribute(componentProto.id);
+	        }
+	        else {
+	            this._contentAttr = null;
+	            this._hostAttr = null;
+	        }
+	    }
+	    DomRenderer.prototype.selectRootElement = function (selectorOrNode, debugInfo) {
+	        var el;
+	        if (lang_1.isString(selectorOrNode)) {
+	            el = dom_adapter_1.getDOM().querySelector(this._rootRenderer.document, selectorOrNode);
+	            if (lang_1.isBlank(el)) {
+	                throw new exceptions_1.BaseException("The selector \"" + selectorOrNode + "\" did not match any elements");
+	            }
+	        }
+	        else {
+	            el = selectorOrNode;
+	        }
+	        dom_adapter_1.getDOM().clearNodes(el);
+	        return el;
+	    };
+	    DomRenderer.prototype.createElement = function (parent, name, debugInfo) {
+	        var nsAndName = splitNamespace(name);
+	        var el = lang_1.isPresent(nsAndName[0]) ?
+	            dom_adapter_1.getDOM().createElementNS(NAMESPACE_URIS[nsAndName[0]], nsAndName[1]) :
+	            dom_adapter_1.getDOM().createElement(nsAndName[1]);
+	        if (lang_1.isPresent(this._contentAttr)) {
+	            dom_adapter_1.getDOM().setAttribute(el, this._contentAttr, '');
+	        }
+	        if (lang_1.isPresent(parent)) {
+	            dom_adapter_1.getDOM().appendChild(parent, el);
+	        }
+	        return el;
+	    };
+	    DomRenderer.prototype.createViewRoot = function (hostElement) {
+	        var nodesParent;
+	        if (this.componentProto.encapsulation === core_1.ViewEncapsulation.Native) {
+	            nodesParent = dom_adapter_1.getDOM().createShadowRoot(hostElement);
+	            this._rootRenderer.sharedStylesHost.addHost(nodesParent);
+	            for (var i = 0; i < this._styles.length; i++) {
+	                dom_adapter_1.getDOM().appendChild(nodesParent, dom_adapter_1.getDOM().createStyleElement(this._styles[i]));
+	            }
+	        }
+	        else {
+	            if (lang_1.isPresent(this._hostAttr)) {
+	                dom_adapter_1.getDOM().setAttribute(hostElement, this._hostAttr, '');
+	            }
+	            nodesParent = hostElement;
+	        }
+	        return nodesParent;
+	    };
+	    DomRenderer.prototype.createTemplateAnchor = function (parentElement, debugInfo) {
+	        var comment = dom_adapter_1.getDOM().createComment(TEMPLATE_COMMENT_TEXT);
+	        if (lang_1.isPresent(parentElement)) {
+	            dom_adapter_1.getDOM().appendChild(parentElement, comment);
+	        }
+	        return comment;
+	    };
+	    DomRenderer.prototype.createText = function (parentElement, value, debugInfo) {
+	        var node = dom_adapter_1.getDOM().createTextNode(value);
+	        if (lang_1.isPresent(parentElement)) {
+	            dom_adapter_1.getDOM().appendChild(parentElement, node);
+	        }
+	        return node;
+	    };
+	    DomRenderer.prototype.projectNodes = function (parentElement, nodes) {
+	        if (lang_1.isBlank(parentElement))
+	            return;
+	        appendNodes(parentElement, nodes);
+	    };
+	    DomRenderer.prototype.attachViewAfter = function (node, viewRootNodes) {
+	        moveNodesAfterSibling(node, viewRootNodes);
+	        for (var i = 0; i < viewRootNodes.length; i++)
+	            this.animateNodeEnter(viewRootNodes[i]);
+	    };
+	    DomRenderer.prototype.detachView = function (viewRootNodes) {
+	        for (var i = 0; i < viewRootNodes.length; i++) {
+	            var node = viewRootNodes[i];
+	            dom_adapter_1.getDOM().remove(node);
+	            this.animateNodeLeave(node);
+	        }
+	    };
+	    DomRenderer.prototype.destroyView = function (hostElement, viewAllNodes) {
+	        if (this.componentProto.encapsulation === core_1.ViewEncapsulation.Native && lang_1.isPresent(hostElement)) {
+	            this._rootRenderer.sharedStylesHost.removeHost(dom_adapter_1.getDOM().getShadowRoot(hostElement));
+	        }
+	    };
+	    DomRenderer.prototype.listen = function (renderElement, name, callback) {
+	        return this._rootRenderer.eventManager.addEventListener(renderElement, name, decoratePreventDefault(callback));
+	    };
+	    DomRenderer.prototype.listenGlobal = function (target, name, callback) {
+	        return this._rootRenderer.eventManager.addGlobalEventListener(target, name, decoratePreventDefault(callback));
+	    };
+	    DomRenderer.prototype.setElementProperty = function (renderElement, propertyName, propertyValue) {
+	        dom_adapter_1.getDOM().setProperty(renderElement, propertyName, propertyValue);
+	    };
+	    DomRenderer.prototype.setElementAttribute = function (renderElement, attributeName, attributeValue) {
+	        var attrNs;
+	        var nsAndName = splitNamespace(attributeName);
+	        if (lang_1.isPresent(nsAndName[0])) {
+	            attributeName = nsAndName[0] + ':' + nsAndName[1];
+	            attrNs = NAMESPACE_URIS[nsAndName[0]];
+	        }
+	        if (lang_1.isPresent(attributeValue)) {
+	            if (lang_1.isPresent(attrNs)) {
+	                dom_adapter_1.getDOM().setAttributeNS(renderElement, attrNs, attributeName, attributeValue);
+	            }
+	            else {
+	                dom_adapter_1.getDOM().setAttribute(renderElement, attributeName, attributeValue);
+	            }
+	        }
+	        else {
+	            if (lang_1.isPresent(attrNs)) {
+	                dom_adapter_1.getDOM().removeAttributeNS(renderElement, attrNs, nsAndName[1]);
+	            }
+	            else {
+	                dom_adapter_1.getDOM().removeAttribute(renderElement, attributeName);
+	            }
+	        }
+	    };
+	    DomRenderer.prototype.setBindingDebugInfo = function (renderElement, propertyName, propertyValue) {
+	        var dashCasedPropertyName = util_1.camelCaseToDashCase(propertyName);
+	        if (dom_adapter_1.getDOM().isCommentNode(renderElement)) {
+	            var existingBindings = lang_1.RegExpWrapper.firstMatch(TEMPLATE_BINDINGS_EXP, lang_1.StringWrapper.replaceAll(dom_adapter_1.getDOM().getText(renderElement), /\n/g, ''));
+	            var parsedBindings = lang_1.Json.parse(existingBindings[1]);
+	            parsedBindings[dashCasedPropertyName] = propertyValue;
+	            dom_adapter_1.getDOM().setText(renderElement, lang_1.StringWrapper.replace(TEMPLATE_COMMENT_TEXT, '{}', lang_1.Json.stringify(parsedBindings)));
+	        }
+	        else {
+	            this.setElementAttribute(renderElement, propertyName, propertyValue);
+	        }
+	    };
+	    DomRenderer.prototype.setElementClass = function (renderElement, className, isAdd) {
+	        if (isAdd) {
+	            dom_adapter_1.getDOM().addClass(renderElement, className);
+	        }
+	        else {
+	            dom_adapter_1.getDOM().removeClass(renderElement, className);
+	        }
+	    };
+	    DomRenderer.prototype.setElementStyle = function (renderElement, styleName, styleValue) {
+	        if (lang_1.isPresent(styleValue)) {
+	            dom_adapter_1.getDOM().setStyle(renderElement, styleName, lang_1.stringify(styleValue));
+	        }
+	        else {
+	            dom_adapter_1.getDOM().removeStyle(renderElement, styleName);
+	        }
+	    };
+	    DomRenderer.prototype.invokeElementMethod = function (renderElement, methodName, args) {
+	        dom_adapter_1.getDOM().invoke(renderElement, methodName, args);
+	    };
+	    DomRenderer.prototype.setText = function (renderNode, text) { dom_adapter_1.getDOM().setText(renderNode, text); };
+	    /**
+	     * Performs animations if necessary
+	     * @param node
+	     */
+	    DomRenderer.prototype.animateNodeEnter = function (node) {
+	        if (dom_adapter_1.getDOM().isElementNode(node) && dom_adapter_1.getDOM().hasClass(node, 'ng-animate')) {
+	            dom_adapter_1.getDOM().addClass(node, 'ng-enter');
+	            this._rootRenderer.animate.css()
+	                .addAnimationClass('ng-enter-active')
+	                .start(node)
+	                .onComplete(function () { dom_adapter_1.getDOM().removeClass(node, 'ng-enter'); });
+	        }
+	    };
+	    /**
+	     * If animations are necessary, performs animations then removes the element; otherwise, it just
+	     * removes the element.
+	     * @param node
+	     */
+	    DomRenderer.prototype.animateNodeLeave = function (node) {
+	        if (dom_adapter_1.getDOM().isElementNode(node) && dom_adapter_1.getDOM().hasClass(node, 'ng-animate')) {
+	            dom_adapter_1.getDOM().addClass(node, 'ng-leave');
+	            this._rootRenderer.animate.css()
+	                .addAnimationClass('ng-leave-active')
+	                .start(node)
+	                .onComplete(function () {
+	                dom_adapter_1.getDOM().removeClass(node, 'ng-leave');
+	                dom_adapter_1.getDOM().remove(node);
+	            });
+	        }
+	        else {
+	            dom_adapter_1.getDOM().remove(node);
+	        }
+	    };
+	    return DomRenderer;
+	}());
+	exports.DomRenderer = DomRenderer;
+	function moveNodesAfterSibling(sibling, nodes) {
+	    var parent = dom_adapter_1.getDOM().parentElement(sibling);
+	    if (nodes.length > 0 && lang_1.isPresent(parent)) {
+	        var nextSibling = dom_adapter_1.getDOM().nextSibling(sibling);
+	        if (lang_1.isPresent(nextSibling)) {
+	            for (var i = 0; i < nodes.length; i++) {
+	                dom_adapter_1.getDOM().insertBefore(nextSibling, nodes[i]);
+	            }
+	        }
+	        else {
+	            for (var i = 0; i < nodes.length; i++) {
+	                dom_adapter_1.getDOM().appendChild(parent, nodes[i]);
+	            }
+	        }
+	    }
+	}
+	function appendNodes(parent, nodes) {
+	    for (var i = 0; i < nodes.length; i++) {
+	        dom_adapter_1.getDOM().appendChild(parent, nodes[i]);
+	    }
+	}
+	function decoratePreventDefault(eventHandler) {
+	    return function (event) {
+	        var allowDefaultBehavior = eventHandler(event);
+	        if (allowDefaultBehavior === false) {
+	            // TODO(tbosch): move preventDefault into event plugins...
+	            dom_adapter_1.getDOM().preventDefault(event);
+	        }
+	    };
+	}
+	var COMPONENT_REGEX = /%COMP%/g;
+	exports.COMPONENT_VARIABLE = '%COMP%';
+	exports.HOST_ATTR = "_nghost-" + exports.COMPONENT_VARIABLE;
+	exports.CONTENT_ATTR = "_ngcontent-" + exports.COMPONENT_VARIABLE;
+	function _shimContentAttribute(componentShortId) {
+	    return lang_1.StringWrapper.replaceAll(exports.CONTENT_ATTR, COMPONENT_REGEX, componentShortId);
+	}
+	function _shimHostAttribute(componentShortId) {
+	    return lang_1.StringWrapper.replaceAll(exports.HOST_ATTR, COMPONENT_REGEX, componentShortId);
+	}
+	function _flattenStyles(compId, styles, target) {
+	    for (var i = 0; i < styles.length; i++) {
+	        var style = styles[i];
+	        if (lang_1.isArray(style)) {
+	            _flattenStyles(compId, style, target);
+	        }
+	        else {
+	            style = lang_1.StringWrapper.replaceAll(style, COMPONENT_REGEX, compId);
+	            target.push(style);
+	        }
+	    }
+	    return target;
+	}
+	var NS_PREFIX_RE = /^@([^:]+):(.+)/g;
+	function splitNamespace(name) {
+	    if (name[0] != '@') {
+	        return [null, name];
+	    }
+	    var match = lang_1.RegExpWrapper.firstMatch(NS_PREFIX_RE, name);
+	    return [match[1], match[2]];
+	}
+	//# sourceMappingURL=dom_renderer.js.map
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var dom_adapter_1 = __webpack_require__(9);
+	var event_manager_1 = __webpack_require__(18);
+	var DomEventsPlugin = (function (_super) {
+	    __extends(DomEventsPlugin, _super);
+	    function DomEventsPlugin() {
+	        _super.apply(this, arguments);
+	    }
+	    // This plugin should come last in the list of plugins, because it accepts all
+	    // events.
+	    DomEventsPlugin.prototype.supports = function (eventName) { return true; };
+	    DomEventsPlugin.prototype.addEventListener = function (element, eventName, handler) {
+	        var zone = this.manager.getZone();
+	        var outsideHandler = function (event) { return zone.runGuarded(function () { return handler(event); }); };
+	        return this.manager.getZone().runOutsideAngular(function () { return dom_adapter_1.getDOM().onAndCancel(element, eventName, outsideHandler); });
+	    };
+	    DomEventsPlugin.prototype.addGlobalEventListener = function (target, eventName, handler) {
+	        var element = dom_adapter_1.getDOM().getGlobalEventTarget(target);
+	        var zone = this.manager.getZone();
+	        var outsideHandler = function (event) { return zone.runGuarded(function () { return handler(event); }); };
+	        return this.manager.getZone().runOutsideAngular(function () { return dom_adapter_1.getDOM().onAndCancel(element, eventName, outsideHandler); });
+	    };
+	    DomEventsPlugin.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    return DomEventsPlugin;
+	}(event_manager_1.EventManagerPlugin));
+	exports.DomEventsPlugin = DomEventsPlugin;
+	//# sourceMappingURL=dom_events.js.map
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(6);
+	var exceptions_1 = __webpack_require__(43);
+	var hammer_common_1 = __webpack_require__(284);
+	exports.HAMMER_GESTURE_CONFIG = 
+	/*@ts2dart_const*/ new core_1.OpaqueToken("HammerGestureConfig");
+	var HammerGestureConfig = (function () {
+	    function HammerGestureConfig() {
+	        this.events = [];
+	        this.overrides = {};
+	    }
+	    HammerGestureConfig.prototype.buildHammer = function (element) {
+	        var mc = new Hammer(element);
+	        mc.get('pinch').set({ enable: true });
+	        mc.get('rotate').set({ enable: true });
+	        for (var eventName in this.overrides) {
+	            mc.get(eventName).set(this.overrides[eventName]);
+	        }
+	        return mc;
+	    };
+	    HammerGestureConfig.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    return HammerGestureConfig;
+	}());
+	exports.HammerGestureConfig = HammerGestureConfig;
+	var HammerGesturesPlugin = (function (_super) {
+	    __extends(HammerGesturesPlugin, _super);
+	    function HammerGesturesPlugin(_config) {
+	        _super.call(this);
+	        this._config = _config;
+	    }
+	    HammerGesturesPlugin.prototype.supports = function (eventName) {
+	        if (!_super.prototype.supports.call(this, eventName) && !this.isCustomEvent(eventName))
+	            return false;
+	        if (!lang_1.isPresent(window['Hammer'])) {
+	            throw new exceptions_1.BaseException("Hammer.js is not loaded, can not bind " + eventName + " event");
+	        }
+	        return true;
+	    };
+	    HammerGesturesPlugin.prototype.addEventListener = function (element, eventName, handler) {
+	        var _this = this;
+	        var zone = this.manager.getZone();
+	        eventName = eventName.toLowerCase();
+	        return zone.runOutsideAngular(function () {
+	            // Creating the manager bind events, must be done outside of angular
+	            var mc = _this._config.buildHammer(element);
+	            var callback = function (eventObj) { zone.runGuarded(function () { handler(eventObj); }); };
+	            mc.on(eventName, callback);
+	            return function () { mc.off(eventName, callback); };
+	        });
+	    };
+	    HammerGesturesPlugin.prototype.isCustomEvent = function (eventName) { return this._config.events.indexOf(eventName) > -1; };
+	    HammerGesturesPlugin.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    HammerGesturesPlugin.ctorParameters = [
+	        { type: HammerGestureConfig, decorators: [{ type: core_1.Inject, args: [exports.HAMMER_GESTURE_CONFIG,] },] },
+	    ];
+	    return HammerGesturesPlugin;
+	}(hammer_common_1.HammerGesturesPluginCommon));
+	exports.HammerGesturesPlugin = HammerGesturesPlugin;
+	//# sourceMappingURL=hammer_gestures.js.map
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	var CAMEL_CASE_REGEXP = /([A-Z])/g;
+	var DASH_CASE_REGEXP = /-([a-z])/g;
+	function camelCaseToDashCase(input) {
+	    return lang_1.StringWrapper.replaceAllMapped(input, CAMEL_CASE_REGEXP, function (m) { return '-' + m[1].toLowerCase(); });
+	}
+	exports.camelCaseToDashCase = camelCaseToDashCase;
+	function dashCaseToCamelCase(input) {
+	    return lang_1.StringWrapper.replaceAllMapped(input, DASH_CASE_REGEXP, function (m) { return m[1].toUpperCase(); });
+	}
+	exports.dashCaseToCamelCase = dashCaseToCamelCase;
+	//# sourceMappingURL=util.js.map
+
+/***/ },
+/* 75 */
+315,
+/* 76 */
+[561, 6, 75, 15],
+/* 77 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	exports.Math = lang_1.global.Math;
+	exports.NaN = typeof exports.NaN;
+	//# sourceMappingURL=math.js.map
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var url_sanitizer_1 = __webpack_require__(290);
+	var style_sanitizer_1 = __webpack_require__(289);
+	var core_private_1 = __webpack_require__(37);
+	exports.SecurityContext = core_private_1.SecurityContext;
+	var core_1 = __webpack_require__(2);
+	/**
+	 * DomSanitizationService helps preventing Cross Site Scripting Security bugs (XSS) by sanitizing
+	 * values to be safe to use in the different DOM contexts.
+	 *
+	 * For example, when binding a URL in an `<a [href]="someValue">` hyperlink, `someValue` will be
+	 * sanitized so that an attacker cannot inject e.g. a `javascript:` URL that would execute code on
+	 * the website.
+	 *
+	 * In specific situations, it might be necessary to disable sanitization, for example if the
+	 * application genuinely needs to produce a `javascript:` style link with a dynamic value in it.
+	 * Users can bypass security by constructing a value with one of the `bypassSecurityTrust...`
+	 * methods, and then binding to that value from the template.
+	 *
+	 * These situations should be very rare, and extraordinary care must be taken to avoid creating a
+	 * Cross Site Scripting (XSS) security bug!
+	 *
+	 * When using `bypassSecurityTrust...`, make sure to call the method as early as possible and as
+	 * close as possible to the source of the value, to make it easy to verify no security bug is
+	 * created by its use.
+	 *
+	 * It is not required (and not recommended) to bypass security if the value is safe, e.g. a URL that
+	 * does not start with a suspicious protocol, or an HTML snippet that does not contain dangerous
+	 * code. The sanitizer leaves safe values intact.
+	 */
+	var DomSanitizationService = (function () {
+	    function DomSanitizationService() {
+	    }
+	    return DomSanitizationService;
+	}());
+	exports.DomSanitizationService = DomSanitizationService;
+	var DomSanitizationServiceImpl = (function (_super) {
+	    __extends(DomSanitizationServiceImpl, _super);
+	    function DomSanitizationServiceImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    DomSanitizationServiceImpl.prototype.sanitize = function (ctx, value) {
+	        if (value == null)
+	            return null;
+	        switch (ctx) {
+	            case core_private_1.SecurityContext.NONE:
+	                return value;
+	            case core_private_1.SecurityContext.HTML:
+	                if (value instanceof SafeHtmlImpl)
+	                    return value.changingThisBreaksApplicationSecurity;
+	                this.checkNotSafeValue(value, 'HTML');
+	                return this.sanitizeHtml(String(value));
+	            case core_private_1.SecurityContext.STYLE:
+	                if (value instanceof SafeStyleImpl)
+	                    return value.changingThisBreaksApplicationSecurity;
+	                this.checkNotSafeValue(value, 'Style');
+	                return style_sanitizer_1.sanitizeStyle(value);
+	            case core_private_1.SecurityContext.SCRIPT:
+	                if (value instanceof SafeScriptImpl)
+	                    return value.changingThisBreaksApplicationSecurity;
+	                this.checkNotSafeValue(value, 'Script');
+	                throw new Error('unsafe value used in a script context');
+	            case core_private_1.SecurityContext.URL:
+	                if (value instanceof SafeUrlImpl)
+	                    return value.changingThisBreaksApplicationSecurity;
+	                this.checkNotSafeValue(value, 'URL');
+	                return url_sanitizer_1.sanitizeUrl(String(value));
+	            case core_private_1.SecurityContext.RESOURCE_URL:
+	                if (value instanceof SafeResourceUrlImpl) {
+	                    return value.changingThisBreaksApplicationSecurity;
+	                }
+	                this.checkNotSafeValue(value, 'ResourceURL');
+	                throw new Error('unsafe value used in a resource URL context');
+	            default:
+	                throw new Error("Unexpected SecurityContext " + ctx);
+	        }
+	    };
+	    DomSanitizationServiceImpl.prototype.checkNotSafeValue = function (value, expectedType) {
+	        if (value instanceof SafeValueImpl) {
+	            throw new Error('Required a safe ' + expectedType + ', got a ' + value.getTypeName());
+	        }
+	    };
+	    DomSanitizationServiceImpl.prototype.sanitizeHtml = function (value) {
+	        // TODO(martinprobst): implement.
+	        return value;
+	    };
+	    DomSanitizationServiceImpl.prototype.bypassSecurityTrustHtml = function (value) { return new SafeHtmlImpl(value); };
+	    DomSanitizationServiceImpl.prototype.bypassSecurityTrustStyle = function (value) { return new SafeStyleImpl(value); };
+	    DomSanitizationServiceImpl.prototype.bypassSecurityTrustScript = function (value) { return new SafeScriptImpl(value); };
+	    DomSanitizationServiceImpl.prototype.bypassSecurityTrustUrl = function (value) { return new SafeUrlImpl(value); };
+	    DomSanitizationServiceImpl.prototype.bypassSecurityTrustResourceUrl = function (value) {
+	        return new SafeResourceUrlImpl(value);
+	    };
+	    DomSanitizationServiceImpl.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    return DomSanitizationServiceImpl;
+	}(DomSanitizationService));
+	exports.DomSanitizationServiceImpl = DomSanitizationServiceImpl;
+	var SafeValueImpl = (function () {
+	    function SafeValueImpl(changingThisBreaksApplicationSecurity) {
+	        this.changingThisBreaksApplicationSecurity = changingThisBreaksApplicationSecurity;
+	        // empty
+	    }
+	    return SafeValueImpl;
+	}());
+	var SafeHtmlImpl = (function (_super) {
+	    __extends(SafeHtmlImpl, _super);
+	    function SafeHtmlImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    SafeHtmlImpl.prototype.getTypeName = function () { return 'HTML'; };
+	    return SafeHtmlImpl;
+	}(SafeValueImpl));
+	var SafeStyleImpl = (function (_super) {
+	    __extends(SafeStyleImpl, _super);
+	    function SafeStyleImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    SafeStyleImpl.prototype.getTypeName = function () { return 'Style'; };
+	    return SafeStyleImpl;
+	}(SafeValueImpl));
+	var SafeScriptImpl = (function (_super) {
+	    __extends(SafeScriptImpl, _super);
+	    function SafeScriptImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    SafeScriptImpl.prototype.getTypeName = function () { return 'Script'; };
+	    return SafeScriptImpl;
+	}(SafeValueImpl));
+	var SafeUrlImpl = (function (_super) {
+	    __extends(SafeUrlImpl, _super);
+	    function SafeUrlImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    SafeUrlImpl.prototype.getTypeName = function () { return 'URL'; };
+	    return SafeUrlImpl;
+	}(SafeValueImpl));
+	var SafeResourceUrlImpl = (function (_super) {
+	    __extends(SafeResourceUrlImpl, _super);
+	    function SafeResourceUrlImpl() {
+	        _super.apply(this, arguments);
+	    }
+	    SafeResourceUrlImpl.prototype.getTypeName = function () { return 'ResourceURL'; };
+	    return SafeResourceUrlImpl;
+	}(SafeValueImpl));
+	//# sourceMappingURL=dom_sanitization_service.js.map
+
+/***/ },
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6128,7 +8003,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 58 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6192,7 +8067,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 59 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6300,7 +8175,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 60 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6362,7 +8237,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 61 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6503,7 +8378,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 62 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6612,7 +8487,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 63 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6750,7 +8625,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 64 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6844,7 +8719,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 65 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -6967,7 +8842,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 66 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7090,7 +8965,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 67 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7202,7 +9077,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 68 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7349,7 +9224,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 69 */
+/* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7434,7 +9309,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 70 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7609,7 +9484,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 71 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7676,7 +9551,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 72 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7760,7 +9635,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 73 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7824,7 +9699,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 74 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7907,7 +9782,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 75 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -7989,7 +9864,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 76 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8092,7 +9967,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 77 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8194,7 +10069,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 78 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8264,7 +10139,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 79 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8331,7 +10206,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 80 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8402,7 +10277,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 81 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8473,7 +10348,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 82 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8543,7 +10418,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 83 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8620,7 +10495,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 84 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8705,7 +10580,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 85 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8789,7 +10664,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 86 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8859,7 +10734,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 87 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -8969,7 +10844,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 88 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9080,7 +10955,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 89 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9144,7 +11019,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 90 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9208,7 +11083,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 91 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9276,7 +11151,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 92 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9344,7 +11219,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 93 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9421,7 +11296,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 94 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9501,7 +11376,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 95 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9582,7 +11457,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 96 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9685,7 +11560,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 97 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9813,7 +11688,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 98 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -9962,7 +11837,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 99 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10075,7 +11950,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 100 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10174,7 +12049,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 101 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10261,7 +12136,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 102 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10392,7 +12267,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 103 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10466,7 +12341,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 104 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10546,7 +12421,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 105 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10633,7 +12508,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 106 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10726,7 +12601,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 107 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10817,7 +12692,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 108 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10879,7 +12754,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 109 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -10951,7 +12826,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 110 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11043,7 +12918,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 111 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11183,7 +13058,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 112 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11257,7 +13132,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 113 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11377,7 +13252,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 114 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11478,7 +13353,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 115 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11593,7 +13468,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 116 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11687,7 +13562,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 117 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11772,7 +13647,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 118 */
+/* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -11935,7 +13810,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 119 */
+/* 141 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12021,7 +13896,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 120 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12107,7 +13982,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 121 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12204,7 +14079,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 122 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12271,7 +14146,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 123 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12398,7 +14273,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 124 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12475,7 +14350,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 125 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12539,7 +14414,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 126 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12667,7 +14542,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 127 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12776,7 +14651,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 128 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12841,7 +14716,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 129 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12910,7 +14785,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 130 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -12989,7 +14864,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 131 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13168,7 +15043,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 132 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13233,7 +15108,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 133 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13308,7 +15183,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 134 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13462,7 +15337,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 135 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13628,7 +15503,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 136 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13702,7 +15577,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 137 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13816,7 +15691,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 138 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -13930,7 +15805,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 139 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14023,7 +15898,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 140 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14096,7 +15971,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 141 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14159,7 +16034,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 142 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14292,7 +16167,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 143 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14385,7 +16260,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 144 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14456,7 +16331,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 145 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14522,7 +16397,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 146 */
+/* 168 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14646,7 +16521,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 147 */
+/* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14740,7 +16615,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 148 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14835,7 +16710,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 149 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14897,7 +16772,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 150 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -14959,7 +16834,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 151 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15109,7 +16984,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 152 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15171,7 +17046,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 153 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15254,7 +17129,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 154 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15326,7 +17201,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 155 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15457,7 +17332,7 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 156 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//! moment.js locale configuration
@@ -15562,23 +17437,23 @@ webpackJsonp([2],[
 	}));
 
 /***/ },
-/* 157 */,
-/* 158 */,
-/* 159 */
+/* 179 */,
+/* 180 */,
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var accordion_component_1 = __webpack_require__(34);
-	var accordion_group_component_1 = __webpack_require__(160);
-	var accordion_component_2 = __webpack_require__(34);
+	var accordion_component_1 = __webpack_require__(44);
+	var accordion_group_component_1 = __webpack_require__(182);
+	var accordion_component_2 = __webpack_require__(44);
 	exports.AccordionComponent = accordion_component_2.AccordionComponent;
-	var accordion_group_component_2 = __webpack_require__(160);
+	var accordion_group_component_2 = __webpack_require__(182);
 	exports.AccordionPanelComponent = accordion_group_component_2.AccordionPanelComponent;
 	exports.ACCORDION_DIRECTIVES = [accordion_component_1.AccordionComponent, accordion_group_component_1.AccordionPanelComponent];
 
 
 /***/ },
-/* 160 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15596,8 +17471,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var collapse_1 = __webpack_require__(36);
-	var accordion_component_1 = __webpack_require__(34);
+	var collapse_1 = __webpack_require__(46);
+	var accordion_component_1 = __webpack_require__(44);
 	var AccordionPanelComponent = (function () {
 	    function AccordionPanelComponent(accordion) {
 	        this.accordion = accordion;
@@ -15660,30 +17535,30 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 161 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var alert_component_1 = __webpack_require__(265);
+	var alert_component_1 = __webpack_require__(297);
 	exports.AlertComponent = alert_component_1.AlertComponent;
 
 
 /***/ },
-/* 162 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var button_checkbox_directive_1 = __webpack_require__(163);
-	var button_radio_directive_1 = __webpack_require__(164);
-	var button_checkbox_directive_2 = __webpack_require__(163);
+	var button_checkbox_directive_1 = __webpack_require__(185);
+	var button_radio_directive_1 = __webpack_require__(186);
+	var button_checkbox_directive_2 = __webpack_require__(185);
 	exports.ButtonCheckboxDirective = button_checkbox_directive_2.ButtonCheckboxDirective;
-	var button_radio_directive_2 = __webpack_require__(164);
+	var button_radio_directive_2 = __webpack_require__(186);
 	exports.ButtonRadioDirective = button_radio_directive_2.ButtonRadioDirective;
 	exports.BUTTON_DIRECTIVES = [button_checkbox_directive_1.ButtonCheckboxDirective, button_radio_directive_1.ButtonRadioDirective];
 
 
 /***/ },
-/* 163 */
+/* 185 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15777,7 +17652,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 164 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15867,21 +17742,21 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 165 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var slide_component_1 = __webpack_require__(166);
-	var carousel_component_1 = __webpack_require__(35);
-	var slide_component_2 = __webpack_require__(166);
+	var slide_component_1 = __webpack_require__(188);
+	var carousel_component_1 = __webpack_require__(45);
+	var slide_component_2 = __webpack_require__(188);
 	exports.SlideComponent = slide_component_2.SlideComponent;
-	var carousel_component_2 = __webpack_require__(35);
+	var carousel_component_2 = __webpack_require__(45);
 	exports.CarouselComponent = carousel_component_2.CarouselComponent;
 	exports.CAROUSEL_DIRECTIVES = [carousel_component_1.CarouselComponent, slide_component_1.SlideComponent];
 
 
 /***/ },
-/* 166 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15895,7 +17770,7 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var carousel_component_1 = __webpack_require__(35);
+	var carousel_component_1 = __webpack_require__(45);
 	var SlideComponent = (function () {
 	    function SlideComponent(carousel) {
 	        this.addClass = true;
@@ -15938,7 +17813,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 167 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15986,21 +17861,21 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 168 */
+/* 190 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var datepicker_popup_component_1 = __webpack_require__(169);
-	var datepicker_component_1 = __webpack_require__(37);
-	var datepicker_popup_component_2 = __webpack_require__(169);
+	var datepicker_popup_component_1 = __webpack_require__(191);
+	var datepicker_component_1 = __webpack_require__(47);
+	var datepicker_popup_component_2 = __webpack_require__(191);
 	exports.DatePickerPopupDirective = datepicker_popup_component_2.DatePickerPopupDirective;
-	var datepicker_component_2 = __webpack_require__(37);
+	var datepicker_component_2 = __webpack_require__(47);
 	exports.DatePickerComponent = datepicker_component_2.DatePickerComponent;
 	exports.DATEPICKER_DIRECTIVES = [datepicker_component_1.DatePickerComponent, datepicker_popup_component_1.DatePickerPopupDirective];
 
 
 /***/ },
-/* 169 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16018,8 +17893,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var position_1 = __webpack_require__(27);
-	var datepicker_component_1 = __webpack_require__(37);
+	var position_1 = __webpack_require__(30);
+	var datepicker_component_1 = __webpack_require__(47);
 	var PopupOptions = (function () {
 	    function PopupOptions(options) {
 	        Object.assign(this, options);
@@ -16161,24 +18036,24 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 170 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var dropdown_directive_1 = __webpack_require__(26);
-	var dropdown_menu_directive_1 = __webpack_require__(171);
-	var dropdown_toggle_directive_1 = __webpack_require__(172);
-	var dropdown_directive_2 = __webpack_require__(26);
+	var dropdown_directive_1 = __webpack_require__(29);
+	var dropdown_menu_directive_1 = __webpack_require__(193);
+	var dropdown_toggle_directive_1 = __webpack_require__(194);
+	var dropdown_directive_2 = __webpack_require__(29);
 	exports.DropdownDirective = dropdown_directive_2.DropdownDirective;
-	var dropdown_menu_directive_2 = __webpack_require__(171);
+	var dropdown_menu_directive_2 = __webpack_require__(193);
 	exports.DropdownMenuDirective = dropdown_menu_directive_2.DropdownMenuDirective;
-	var dropdown_toggle_directive_2 = __webpack_require__(172);
+	var dropdown_toggle_directive_2 = __webpack_require__(194);
 	exports.DropdownToggleDirective = dropdown_toggle_directive_2.DropdownToggleDirective;
 	exports.DROPDOWN_DIRECTIVES = [dropdown_directive_1.DropdownDirective, dropdown_toggle_directive_1.DropdownToggleDirective, dropdown_menu_directive_1.DropdownMenuDirective];
 
 
 /***/ },
-/* 171 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16195,7 +18070,7 @@ webpackJsonp([2],[
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(2);
-	var dropdown_directive_1 = __webpack_require__(26);
+	var dropdown_directive_1 = __webpack_require__(29);
 	var DropdownMenuDirective = (function () {
 	    function DropdownMenuDirective(dropdown, el) {
 	        this.dropdown = dropdown;
@@ -16215,7 +18090,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 172 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16232,7 +18107,7 @@ webpackJsonp([2],[
 	    return function (target, key) { decorator(target, key, paramIndex); }
 	};
 	var core_1 = __webpack_require__(2);
-	var dropdown_directive_1 = __webpack_require__(26);
+	var dropdown_directive_1 = __webpack_require__(29);
 	var lang_1 = __webpack_require__(5);
 	var MouseEvent = lang_1.global.MouseEvent;
 	var DropdownToggleDirective = (function () {
@@ -16290,21 +18165,334 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 173 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var pagination_component_1 = __webpack_require__(38);
-	var pager_component_1 = __webpack_require__(174);
-	var pagination_component_2 = __webpack_require__(38);
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	__export(__webpack_require__(48));
+	__export(__webpack_require__(49));
+	__export(__webpack_require__(196));
+	var modal_backdrop_component_2 = __webpack_require__(48);
+	var modal_component_2 = __webpack_require__(196);
+	exports.MODAL_DIRECTVES = [
+	    modal_component_2.ModalDirective, modal_backdrop_component_2.ModalBackdropComponent
+	];
+
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var __param = (this && this.__param) || function (paramIndex, decorator) {
+	    return function (target, key) { decorator(target, key, paramIndex); }
+	};
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(5);
+	var platform_browser_1 = __webpack_require__(232);
+	var modal_backdrop_component_1 = __webpack_require__(48);
+	var modal_options_class_1 = __webpack_require__(49);
+	var components_helper_service_1 = __webpack_require__(211);
+	var utils_class_1 = __webpack_require__(307);
+	var TRANSITION_DURATION = 300;
+	var BACKDROP_TRANSITION_DURATION = 150;
+	var ModalDirective = (function () {
+	    function ModalDirective(element, renderer, document, componentsHelper) {
+	        this.onShow = new core_1.EventEmitter();
+	        this.onShown = new core_1.EventEmitter();
+	        this.onHide = new core_1.EventEmitter();
+	        this.onHidden = new core_1.EventEmitter();
+	        this.isAnimated = true;
+	        this._isShown = false;
+	        this.isBodyOverflowing = false;
+	        this.ignoreBackdropClick = false;
+	        this.originalBodyPadding = 0;
+	        this.scrollbarWidth = 0;
+	        this.element = element;
+	        this.renderer = renderer;
+	        this.document = document;
+	        this.componentsHelper = componentsHelper;
+	    }
+	    Object.defineProperty(ModalDirective.prototype, "config", {
+	        get: function () {
+	            return this._config;
+	        },
+	        set: function (conf) {
+	            this._config = this.getConfig(conf);
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    ;
+	    Object.defineProperty(ModalDirective.prototype, "isShown", {
+	        get: function () {
+	            return this._isShown;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    ModalDirective.prototype.onClick = function (event) {
+	        if (event.target === this.element.nativeElement) {
+	            this.hide(event);
+	        }
+	    };
+	    ModalDirective.prototype.onEsc = function () {
+	        if (this.config.keyboard) {
+	            this.hide();
+	        }
+	    };
+	    ModalDirective.prototype.ngOnDestroy = function () {
+	        this.config = void 0;
+	        this._isShown = void 0;
+	        this.isBodyOverflowing = void 0;
+	        this.ignoreBackdropClick = void 0;
+	        this.originalBodyPadding = void 0;
+	        this.scrollbarWidth = void 0;
+	        this.document = void 0;
+	    };
+	    ModalDirective.prototype.ngAfterViewInit = function () {
+	        this._config = this._config || this.getConfig();
+	    };
+	    ModalDirective.prototype.toggle = function () {
+	        return this._isShown ? this.hide() : this.show();
+	    };
+	    ModalDirective.prototype.show = function () {
+	        var _this = this;
+	        this.onShow.emit(this);
+	        if (this._isShown) {
+	            return;
+	        }
+	        this._isShown = true;
+	        this.checkScrollbar();
+	        this.setScrollbar();
+	        if (this.document && this.document.body) {
+	            this.renderer.setElementClass(this.document.body, modal_options_class_1.ClassName.OPEN, true);
+	        }
+	        this.showBackdrop(function () {
+	            _this.showElement();
+	        });
+	    };
+	    ModalDirective.prototype.hide = function (event) {
+	        var _this = this;
+	        if (event) {
+	            event.preventDefault();
+	        }
+	        this.onHide.emit(this);
+	        if (!this._isShown) {
+	            return;
+	        }
+	        this._isShown = false;
+	        this.renderer.setElementClass(this.element.nativeElement, modal_options_class_1.ClassName.IN, false);
+	        if (this.isAnimated) {
+	            setTimeout(function () { return _this.hideModal(); }, TRANSITION_DURATION);
+	        }
+	        else {
+	            this.hideModal();
+	        }
+	    };
+	    ModalDirective.prototype.getConfig = function (config) {
+	        return Object.assign({}, modal_options_class_1.modalConfigDefaults, config);
+	    };
+	    ModalDirective.prototype.showElement = function () {
+	        var _this = this;
+	        if (!this.element.nativeElement.parentNode ||
+	            (this.element.nativeElement.parentNode.nodeType !== Node.ELEMENT_NODE)) {
+	            if (this.document && this.document.body) {
+	                this.document.body.appendChild(this.element.nativeElement);
+	            }
+	        }
+	        this.renderer.setElementAttribute(this.element.nativeElement, 'aria-hidden', 'false');
+	        this.renderer.setElementStyle(this.element.nativeElement, 'display', 'block');
+	        this.renderer.setElementProperty(this.element.nativeElement, 'scrollTop', 0);
+	        if (this.isAnimated) {
+	            utils_class_1.Utils.reflow(this.element.nativeElement);
+	        }
+	        this.renderer.setElementClass(this.element.nativeElement, modal_options_class_1.ClassName.IN, true);
+	        this.onShown.emit(this);
+	        var transitionComplete = function () {
+	            if (_this._config.focus) {
+	                _this.element.nativeElement.focus();
+	            }
+	            _this.onShown.emit(_this);
+	        };
+	        if (this.isAnimated) {
+	            setTimeout(transitionComplete, TRANSITION_DURATION);
+	        }
+	        else {
+	            transitionComplete();
+	        }
+	    };
+	    ModalDirective.prototype.hideModal = function () {
+	        var _this = this;
+	        this.renderer.setElementAttribute(this.element.nativeElement, 'aria-hidden', 'true');
+	        this.renderer.setElementStyle(this.element.nativeElement, 'display', 'none');
+	        this.showBackdrop(function () {
+	            if (_this.document && _this.document.body) {
+	                _this.renderer.setElementClass(_this.document.body, modal_options_class_1.ClassName.OPEN, false);
+	            }
+	            _this.resetAdjustments();
+	            _this.resetScrollbar();
+	            _this.onHidden.emit(_this);
+	        });
+	    };
+	    ModalDirective.prototype.showBackdrop = function (callback) {
+	        var _this = this;
+	        if (this._isShown && modal_options_class_1.modalConfigDefaults.backdrop) {
+	            this.backdrop = this.componentsHelper
+	                .appendNextToRoot(modal_backdrop_component_1.ModalBackdropComponent, modal_backdrop_component_1.ModalBackdropOptions, new modal_backdrop_component_1.ModalBackdropOptions({ animate: false }));
+	            this.backdrop.then(function (backdrop) {
+	                if (_this.isAnimated) {
+	                    backdrop.instance.isAnimated = _this.isAnimated;
+	                    utils_class_1.Utils.reflow(backdrop.instance.element.nativeElement);
+	                }
+	                backdrop.instance.isShown = true;
+	                if (!callback) {
+	                    return;
+	                }
+	                if (!_this.isAnimated) {
+	                    callback();
+	                    return;
+	                }
+	                setTimeout(callback, BACKDROP_TRANSITION_DURATION);
+	            });
+	        }
+	        else if (!this._isShown && this.backdrop) {
+	            this.backdrop.then(function (backdrop) {
+	                backdrop.instance.isShown = false;
+	                var callbackRemove = function () {
+	                    _this.removeBackdrop();
+	                    if (callback) {
+	                        callback();
+	                    }
+	                };
+	                if (backdrop.instance.isAnimated) {
+	                    setTimeout(callbackRemove, BACKDROP_TRANSITION_DURATION);
+	                }
+	                else {
+	                    callbackRemove();
+	                }
+	            });
+	        }
+	        else if (callback) {
+	            callback();
+	        }
+	    };
+	    ModalDirective.prototype.removeBackdrop = function () {
+	        var _this = this;
+	        if (this.backdrop) {
+	            this.backdrop.then(function (backdrop) {
+	                backdrop.destroy();
+	                _this.backdrop = void 0;
+	            });
+	        }
+	    };
+	    ModalDirective.prototype.resetAdjustments = function () {
+	        this.renderer.setElementStyle(this.element.nativeElement, 'paddingLeft', '');
+	        this.renderer.setElementStyle(this.element.nativeElement, 'paddingRight', '');
+	    };
+	    ModalDirective.prototype.checkScrollbar = function () {
+	        this.isBodyOverflowing = this.document.body.clientWidth < lang_1.global.innerWidth;
+	        this.scrollbarWidth = this.getScrollbarWidth();
+	    };
+	    ModalDirective.prototype.setScrollbar = function () {
+	        if (!this.document) {
+	            return;
+	        }
+	        var fixedEl = this.document.querySelector(modal_options_class_1.Selector.FIXED_CONTENT);
+	        if (!fixedEl) {
+	            return;
+	        }
+	        var bodyPadding = parseInt(utils_class_1.Utils.getStyles(fixedEl).paddingRight || 0, 10);
+	        this.originalBodyPadding = parseInt(this.document.body.style.paddingRight || 0, 10);
+	        if (this.isBodyOverflowing) {
+	            this.document.body.style.paddingRight = (bodyPadding + this.scrollbarWidth) + "px";
+	        }
+	    };
+	    ModalDirective.prototype.resetScrollbar = function () {
+	        this.document.body.style.paddingRight = this.originalBodyPadding;
+	    };
+	    ModalDirective.prototype.getScrollbarWidth = function () {
+	        var scrollDiv = this.renderer.createElement(this.document.body, 'div', void 0);
+	        scrollDiv.className = modal_options_class_1.ClassName.SCROLLBAR_MEASURER;
+	        var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth;
+	        this.document.body.removeChild(scrollDiv);
+	        return scrollbarWidth;
+	    };
+	    __decorate([
+	        core_1.Input(), 
+	        __metadata('design:type', Object), 
+	        __metadata('design:paramtypes', [Object])
+	    ], ModalDirective.prototype, "config", null);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', core_1.EventEmitter)
+	    ], ModalDirective.prototype, "onShow", void 0);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', core_1.EventEmitter)
+	    ], ModalDirective.prototype, "onShown", void 0);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', core_1.EventEmitter)
+	    ], ModalDirective.prototype, "onHide", void 0);
+	    __decorate([
+	        core_1.Output(), 
+	        __metadata('design:type', core_1.EventEmitter)
+	    ], ModalDirective.prototype, "onHidden", void 0);
+	    __decorate([
+	        core_1.HostListener('click', ['$event']), 
+	        __metadata('design:type', Function), 
+	        __metadata('design:paramtypes', [Object]), 
+	        __metadata('design:returntype', void 0)
+	    ], ModalDirective.prototype, "onClick", null);
+	    __decorate([
+	        core_1.HostListener('keydown.esc'), 
+	        __metadata('design:type', Function), 
+	        __metadata('design:paramtypes', []), 
+	        __metadata('design:returntype', void 0)
+	    ], ModalDirective.prototype, "onEsc", null);
+	    ModalDirective = __decorate([
+	        core_1.Directive({
+	            selector: '[bsModal]',
+	            exportAs: 'bs-modal'
+	        }),
+	        __param(2, core_1.Inject(platform_browser_1.DOCUMENT)),
+	        __param(3, core_1.Inject(components_helper_service_1.ComponentsHelper)), 
+	        __metadata('design:paramtypes', [core_1.ElementRef, core_1.Renderer, Object, components_helper_service_1.ComponentsHelper])
+	    ], ModalDirective);
+	    return ModalDirective;
+	}());
+	exports.ModalDirective = ModalDirective;
+
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var pagination_component_1 = __webpack_require__(50);
+	var pager_component_1 = __webpack_require__(198);
+	var pagination_component_2 = __webpack_require__(50);
 	exports.PaginationComponent = pagination_component_2.PaginationComponent;
-	var pager_component_2 = __webpack_require__(174);
+	var pager_component_2 = __webpack_require__(198);
 	exports.PagerComponent = pager_component_2.PagerComponent;
 	exports.PAGINATION_DIRECTIVES = [pagination_component_1.PaginationComponent, pager_component_1.PagerComponent];
 
 
 /***/ },
-/* 174 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16327,7 +18515,7 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var pagination_component_1 = __webpack_require__(38);
+	var pagination_component_1 = __webpack_require__(50);
 	var pagerConfig = {
 	    itemsPerPage: 10,
 	    previousText: '« Previous',
@@ -16361,24 +18549,24 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 175 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var progress_directive_1 = __webpack_require__(28);
-	var bar_component_1 = __webpack_require__(39);
-	var progressbar_component_1 = __webpack_require__(176);
-	var progress_directive_2 = __webpack_require__(28);
+	var progress_directive_1 = __webpack_require__(31);
+	var bar_component_1 = __webpack_require__(51);
+	var progressbar_component_1 = __webpack_require__(200);
+	var progress_directive_2 = __webpack_require__(31);
 	exports.ProgressDirective = progress_directive_2.ProgressDirective;
-	var bar_component_2 = __webpack_require__(39);
+	var bar_component_2 = __webpack_require__(51);
 	exports.BarComponent = bar_component_2.BarComponent;
-	var progressbar_component_2 = __webpack_require__(176);
+	var progressbar_component_2 = __webpack_require__(200);
 	exports.ProgressbarComponent = progressbar_component_2.ProgressbarComponent;
 	exports.PROGRESSBAR_DIRECTIVES = [progress_directive_1.ProgressDirective, bar_component_1.BarComponent, progressbar_component_1.ProgressbarComponent];
 
 
 /***/ },
-/* 176 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16392,8 +18580,8 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var progress_directive_1 = __webpack_require__(28);
-	var bar_component_1 = __webpack_require__(39);
+	var progress_directive_1 = __webpack_require__(31);
+	var bar_component_1 = __webpack_require__(51);
 	var ProgressbarComponent = (function () {
 	    function ProgressbarComponent() {
 	    }
@@ -16427,33 +18615,33 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 177 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var rating_component_1 = __webpack_require__(272);
+	var rating_component_1 = __webpack_require__(304);
 	exports.RatingComponent = rating_component_1.RatingComponent;
 
 
 /***/ },
-/* 178 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var tab_directive_1 = __webpack_require__(40);
-	var tabset_component_1 = __webpack_require__(41);
-	var tab_heading_directive_1 = __webpack_require__(179);
-	var tab_directive_2 = __webpack_require__(40);
+	var tab_directive_1 = __webpack_require__(52);
+	var tabset_component_1 = __webpack_require__(53);
+	var tab_heading_directive_1 = __webpack_require__(203);
+	var tab_directive_2 = __webpack_require__(52);
 	exports.TabDirective = tab_directive_2.TabDirective;
-	var tabset_component_2 = __webpack_require__(41);
+	var tabset_component_2 = __webpack_require__(53);
 	exports.TabsetComponent = tabset_component_2.TabsetComponent;
-	var tab_heading_directive_2 = __webpack_require__(179);
+	var tab_heading_directive_2 = __webpack_require__(203);
 	exports.TabHeadingDirective = tab_heading_directive_2.TabHeadingDirective;
 	exports.TAB_DIRECTIVES = [tab_directive_1.TabDirective, tab_heading_directive_1.TabHeadingDirective, tabset_component_1.TabsetComponent];
 
 
 /***/ },
-/* 179 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16467,7 +18655,7 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var tab_directive_1 = __webpack_require__(40);
+	var tab_directive_1 = __webpack_require__(52);
 	var TabHeadingDirective = (function () {
 	    function TabHeadingDirective(templateRef, tab) {
 	        tab.headingRef = templateRef;
@@ -16482,30 +18670,30 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 180 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var timepicker_component_1 = __webpack_require__(273);
+	var timepicker_component_1 = __webpack_require__(305);
 	exports.TimepickerComponent = timepicker_component_1.TimepickerComponent;
 
 
 /***/ },
-/* 181 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var tooltip_directive_1 = __webpack_require__(183);
-	var tooltip_container_component_1 = __webpack_require__(42);
-	var tooltip_directive_2 = __webpack_require__(183);
+	var tooltip_directive_1 = __webpack_require__(207);
+	var tooltip_container_component_1 = __webpack_require__(54);
+	var tooltip_directive_2 = __webpack_require__(207);
 	exports.TooltipDirective = tooltip_directive_2.TooltipDirective;
-	var tooltip_container_component_2 = __webpack_require__(42);
+	var tooltip_container_component_2 = __webpack_require__(54);
 	exports.TooltipContainerComponent = tooltip_container_component_2.TooltipContainerComponent;
 	exports.TOOLTIP_DIRECTIVES = [tooltip_directive_1.TooltipDirective, tooltip_container_component_1.TooltipContainerComponent];
 
 
 /***/ },
-/* 182 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16533,7 +18721,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 183 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16547,18 +18735,19 @@ webpackJsonp([2],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(2);
-	var tooltip_options_class_1 = __webpack_require__(182);
-	var tooltip_container_component_1 = __webpack_require__(42);
+	var tooltip_options_class_1 = __webpack_require__(206);
+	var tooltip_container_component_1 = __webpack_require__(54);
 	var TooltipDirective = (function () {
 	    function TooltipDirective(viewContainerRef, loader) {
 	        this.placement = 'top';
+	        this.enable = true;
 	        this.animation = true;
 	        this.visible = false;
 	        this.viewContainerRef = viewContainerRef;
 	        this.loader = loader;
 	    }
 	    TooltipDirective.prototype.show = function () {
-	        if (this.visible) {
+	        if (this.visible || !this.enable) {
 	            return;
 	        }
 	        this.visible = true;
@@ -16635,27 +18824,27 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 184 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var typeahead_directive_1 = __webpack_require__(186);
-	var typeahead_container_component_1 = __webpack_require__(43);
-	var typeahead_directive_2 = __webpack_require__(186);
+	var typeahead_directive_1 = __webpack_require__(210);
+	var typeahead_container_component_1 = __webpack_require__(55);
+	var typeahead_directive_2 = __webpack_require__(210);
 	exports.TypeaheadDirective = typeahead_directive_2.TypeaheadDirective;
-	var typeahead_container_component_2 = __webpack_require__(43);
+	var typeahead_container_component_2 = __webpack_require__(55);
 	exports.TypeaheadContainerComponent = typeahead_container_component_2.TypeaheadContainerComponent;
-	var typeahead_options_class_1 = __webpack_require__(44);
+	var typeahead_options_class_1 = __webpack_require__(56);
 	exports.TypeaheadOptions = typeahead_options_class_1.TypeaheadOptions;
 	exports.TYPEAHEAD_DIRECTIVES = [typeahead_directive_1.TypeaheadDirective, typeahead_container_component_1.TypeaheadContainerComponent];
 
 
 /***/ },
-/* 185 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var latin_map_1 = __webpack_require__(274);
+	var latin_map_1 = __webpack_require__(306);
 	var TypeaheadUtils = (function () {
 	    function TypeaheadUtils() {
 	    }
@@ -16691,7 +18880,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 186 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16706,9 +18895,9 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var typeahead_utils_1 = __webpack_require__(185);
-	var typeahead_container_component_1 = __webpack_require__(43);
-	var typeahead_options_class_1 = __webpack_require__(44);
+	var typeahead_utils_1 = __webpack_require__(209);
+	var typeahead_container_component_1 = __webpack_require__(55);
+	var typeahead_options_class_1 = __webpack_require__(56);
 	var lang_1 = __webpack_require__(5);
 	var KeyboardEvent = lang_1.global.KeyboardEvent;
 	function setProperty(renderer, elementRef, propName, propValue) {
@@ -17080,31 +19269,56 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */,
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */,
-/* 210 */,
-/* 211 */,
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(2);
+	var ComponentsHelper = (function () {
+	    function ComponentsHelper(applicationRef, componentResolver, injector) {
+	        this.applicationRef = applicationRef;
+	        this.componentResolver = componentResolver;
+	        this.injector = injector;
+	    }
+	    ComponentsHelper.prototype.getRootViewContainerRef = function () {
+	        var classOfRootComponent = this.applicationRef.componentTypes[0];
+	        var appInstance = this.injector.get(classOfRootComponent);
+	        return appInstance.viewContainerRef;
+	    };
+	    ComponentsHelper.prototype.appendNextToRoot = function (ComponentClass, ComponentOptionsClass, options, _viewContainerRef) {
+	        var _this = this;
+	        return this.componentResolver
+	            .resolveComponent(ComponentClass)
+	            .then(function (componentFactory) {
+	            var viewContainerRef = _viewContainerRef || _this.getRootViewContainerRef();
+	            var bindings = core_1.ReflectiveInjector.resolve([
+	                new core_1.Provider(ComponentOptionsClass, { useValue: options })
+	            ]);
+	            var ctxInjector = viewContainerRef.parentInjector;
+	            var childInjector = Array.isArray(bindings) && bindings.length > 0 ?
+	                core_1.ReflectiveInjector.fromResolvedProviders(bindings, ctxInjector) : ctxInjector;
+	            return viewContainerRef.createComponent(componentFactory, viewContainerRef.length, childInjector);
+	        });
+	    };
+	    ComponentsHelper = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [core_1.ApplicationRef, core_1.ComponentResolver, core_1.Injector])
+	    ], ComponentsHelper);
+	    return ComponentsHelper;
+	}());
+	exports.ComponentsHelper = ComponentsHelper;
+
+
+/***/ },
 /* 212 */,
 /* 213 */,
 /* 214 */,
@@ -17125,7 +19339,17 @@ webpackJsonp([2],[
 /* 229 */,
 /* 230 */,
 /* 231 */,
-/* 232 */,
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	__export(__webpack_require__(287));
+	//# sourceMappingURL=index.js.map
+
+/***/ },
 /* 233 */,
 /* 234 */,
 /* 235 */,
@@ -17152,210 +19376,1061 @@ webpackJsonp([2],[
 /* 256 */,
 /* 257 */,
 /* 258 */,
-/* 259 */
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var animation_builder = __webpack_require__(38);
+	var css_animation_builder = __webpack_require__(69);
+	var browser_details = __webpack_require__(39);
+	var css_animation_options = __webpack_require__(70);
+	var animation = __webpack_require__(68);
+	var dom_adapter = __webpack_require__(9);
+	var browser_adapter = __webpack_require__(40);
+	var __platform_browser_private__;
+	(function (__platform_browser_private__) {
+	    __platform_browser_private__.DomAdapter = dom_adapter.DomAdapter;
+	    function getDOM() { return dom_adapter.getDOM(); }
+	    __platform_browser_private__.getDOM = getDOM;
+	    function setDOM(adapter) { return dom_adapter.setDOM(adapter); }
+	    __platform_browser_private__.setDOM = setDOM;
+	    __platform_browser_private__.setRootDomAdapter = dom_adapter.setRootDomAdapter;
+	    __platform_browser_private__.BrowserDomAdapter = browser_adapter.BrowserDomAdapter;
+	    __platform_browser_private__.AnimationBuilder = animation_builder.AnimationBuilder;
+	    __platform_browser_private__.CssAnimationBuilder = css_animation_builder.CssAnimationBuilder;
+	    __platform_browser_private__.CssAnimationOptions = css_animation_options.CssAnimationOptions;
+	    __platform_browser_private__.Animation = animation.Animation;
+	    __platform_browser_private__.BrowserDetails = browser_details.BrowserDetails;
+	})(__platform_browser_private__ = exports.__platform_browser_private__ || (exports.__platform_browser_private__ = {}));
+	//# sourceMappingURL=private_export.js.map
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var collection_1 = __webpack_require__(15);
+	var lang_1 = __webpack_require__(6);
+	var dom_adapter_1 = __webpack_require__(9);
+	/**
+	 * Provides DOM operations in any browser environment.
+	 */
+	var GenericBrowserDomAdapter = (function (_super) {
+	    __extends(GenericBrowserDomAdapter, _super);
+	    function GenericBrowserDomAdapter() {
+	        var _this = this;
+	        _super.call(this);
+	        this._animationPrefix = null;
+	        this._transitionEnd = null;
+	        try {
+	            var element = this.createElement('div', this.defaultDoc());
+	            if (lang_1.isPresent(this.getStyle(element, 'animationName'))) {
+	                this._animationPrefix = '';
+	            }
+	            else {
+	                var domPrefixes = ['Webkit', 'Moz', 'O', 'ms'];
+	                for (var i = 0; i < domPrefixes.length; i++) {
+	                    if (lang_1.isPresent(this.getStyle(element, domPrefixes[i] + 'AnimationName'))) {
+	                        this._animationPrefix = '-' + domPrefixes[i].toLowerCase() + '-';
+	                        break;
+	                    }
+	                }
+	            }
+	            var transEndEventNames = {
+	                WebkitTransition: 'webkitTransitionEnd',
+	                MozTransition: 'transitionend',
+	                OTransition: 'oTransitionEnd otransitionend',
+	                transition: 'transitionend'
+	            };
+	            collection_1.StringMapWrapper.forEach(transEndEventNames, function (value, key) {
+	                if (lang_1.isPresent(_this.getStyle(element, key))) {
+	                    _this._transitionEnd = value;
+	                }
+	            });
+	        }
+	        catch (e) {
+	            this._animationPrefix = null;
+	            this._transitionEnd = null;
+	        }
+	    }
+	    GenericBrowserDomAdapter.prototype.getDistributedNodes = function (el) { return el.getDistributedNodes(); };
+	    GenericBrowserDomAdapter.prototype.resolveAndSetHref = function (el, baseUrl, href) {
+	        el.href = href == null ? baseUrl : baseUrl + '/../' + href;
+	    };
+	    GenericBrowserDomAdapter.prototype.supportsDOMEvents = function () { return true; };
+	    GenericBrowserDomAdapter.prototype.supportsNativeShadowDOM = function () {
+	        return lang_1.isFunction(this.defaultDoc().body.createShadowRoot);
+	    };
+	    GenericBrowserDomAdapter.prototype.getAnimationPrefix = function () {
+	        return lang_1.isPresent(this._animationPrefix) ? this._animationPrefix : "";
+	    };
+	    GenericBrowserDomAdapter.prototype.getTransitionEnd = function () { return lang_1.isPresent(this._transitionEnd) ? this._transitionEnd : ""; };
+	    GenericBrowserDomAdapter.prototype.supportsAnimation = function () {
+	        return lang_1.isPresent(this._animationPrefix) && lang_1.isPresent(this._transitionEnd);
+	    };
+	    return GenericBrowserDomAdapter;
+	}(dom_adapter_1.DomAdapter));
+	exports.GenericBrowserDomAdapter = GenericBrowserDomAdapter;
+	//# sourceMappingURL=generic_browser_adapter.js.map
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var common_1 = __webpack_require__(3);
+	var dom_adapter_1 = __webpack_require__(9);
+	var BrowserPlatformLocation = (function (_super) {
+	    __extends(BrowserPlatformLocation, _super);
+	    function BrowserPlatformLocation() {
+	        _super.call(this);
+	        this._init();
+	    }
+	    // This is moved to its own method so that `MockPlatformLocationStrategy` can overwrite it
+	    /** @internal */
+	    BrowserPlatformLocation.prototype._init = function () {
+	        this._location = dom_adapter_1.getDOM().getLocation();
+	        this._history = dom_adapter_1.getDOM().getHistory();
+	    };
+	    Object.defineProperty(BrowserPlatformLocation.prototype, "location", {
+	        /** @internal */
+	        get: function () { return this._location; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    BrowserPlatformLocation.prototype.getBaseHrefFromDOM = function () { return dom_adapter_1.getDOM().getBaseHref(); };
+	    BrowserPlatformLocation.prototype.onPopState = function (fn) {
+	        dom_adapter_1.getDOM().getGlobalEventTarget('window').addEventListener('popstate', fn, false);
+	    };
+	    BrowserPlatformLocation.prototype.onHashChange = function (fn) {
+	        dom_adapter_1.getDOM().getGlobalEventTarget('window').addEventListener('hashchange', fn, false);
+	    };
+	    Object.defineProperty(BrowserPlatformLocation.prototype, "pathname", {
+	        get: function () { return this._location.pathname; },
+	        set: function (newPath) { this._location.pathname = newPath; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(BrowserPlatformLocation.prototype, "search", {
+	        get: function () { return this._location.search; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(BrowserPlatformLocation.prototype, "hash", {
+	        get: function () { return this._location.hash; },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    BrowserPlatformLocation.prototype.pushState = function (state, title, url) {
+	        this._history.pushState(state, title, url);
+	    };
+	    BrowserPlatformLocation.prototype.replaceState = function (state, title, url) {
+	        this._history.replaceState(state, title, url);
+	    };
+	    BrowserPlatformLocation.prototype.forward = function () { this._history.forward(); };
+	    BrowserPlatformLocation.prototype.back = function () { this._history.back(); };
+	    BrowserPlatformLocation.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    BrowserPlatformLocation.ctorParameters = [];
+	    return BrowserPlatformLocation;
+	}(common_1.PlatformLocation));
+	exports.BrowserPlatformLocation = BrowserPlatformLocation;
+	//# sourceMappingURL=browser_platform_location.js.map
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var collection_1 = __webpack_require__(15);
+	var lang_1 = __webpack_require__(6);
+	var dom_adapter_1 = __webpack_require__(9);
+	var PublicTestability = (function () {
+	    function PublicTestability(testability) {
+	        this._testability = testability;
+	    }
+	    PublicTestability.prototype.isStable = function () { return this._testability.isStable(); };
+	    PublicTestability.prototype.whenStable = function (callback) { this._testability.whenStable(callback); };
+	    PublicTestability.prototype.findBindings = function (using, provider, exactMatch) {
+	        return this.findProviders(using, provider, exactMatch);
+	    };
+	    PublicTestability.prototype.findProviders = function (using, provider, exactMatch) {
+	        return this._testability.findBindings(using, provider, exactMatch);
+	    };
+	    return PublicTestability;
+	}());
+	var BrowserGetTestability = (function () {
+	    function BrowserGetTestability() {
+	    }
+	    BrowserGetTestability.init = function () { core_1.setTestabilityGetter(new BrowserGetTestability()); };
+	    BrowserGetTestability.prototype.addToWindow = function (registry) {
+	        lang_1.global.getAngularTestability = function (elem, findInAncestors) {
+	            if (findInAncestors === void 0) { findInAncestors = true; }
+	            var testability = registry.findTestabilityInTree(elem, findInAncestors);
+	            if (testability == null) {
+	                throw new Error('Could not find testability for element.');
+	            }
+	            return new PublicTestability(testability);
+	        };
+	        lang_1.global.getAllAngularTestabilities = function () {
+	            var testabilities = registry.getAllTestabilities();
+	            return testabilities.map(function (testability) { return new PublicTestability(testability); });
+	        };
+	        lang_1.global.getAllAngularRootElements = function () { return registry.getAllRootElements(); };
+	        var whenAllStable = function (callback) {
+	            var testabilities = lang_1.global.getAllAngularTestabilities();
+	            var count = testabilities.length;
+	            var didWork = false;
+	            var decrement = function (didWork_) {
+	                didWork = didWork || didWork_;
+	                count--;
+	                if (count == 0) {
+	                    callback(didWork);
+	                }
+	            };
+	            testabilities.forEach(function (testability) { testability.whenStable(decrement); });
+	        };
+	        if (!lang_1.global.frameworkStabilizers) {
+	            lang_1.global.frameworkStabilizers = collection_1.ListWrapper.createGrowableSize(0);
+	        }
+	        lang_1.global.frameworkStabilizers.push(whenAllStable);
+	    };
+	    BrowserGetTestability.prototype.findTestabilityInTree = function (registry, elem, findInAncestors) {
+	        if (elem == null) {
+	            return null;
+	        }
+	        var t = registry.getTestability(elem);
+	        if (lang_1.isPresent(t)) {
+	            return t;
+	        }
+	        else if (!findInAncestors) {
+	            return null;
+	        }
+	        if (dom_adapter_1.getDOM().isShadowRoot(elem)) {
+	            return this.findTestabilityInTree(registry, dom_adapter_1.getDOM().getHost(elem), true);
+	        }
+	        return this.findTestabilityInTree(registry, dom_adapter_1.getDOM().parentElement(elem), true);
+	    };
+	    return BrowserGetTestability;
+	}());
+	exports.BrowserGetTestability = BrowserGetTestability;
+	//# sourceMappingURL=testability.js.map
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var dom_adapter_1 = __webpack_require__(9);
+	/**
+	 * A service that can be used to get and set the title of a current HTML document.
+	 *
+	 * Since an Angular 2 application can't be bootstrapped on the entire HTML document (`<html>` tag)
+	 * it is not possible to bind to the `text` property of the `HTMLTitleElement` elements
+	 * (representing the `<title>` tag). Instead, this service can be used to set and get the current
+	 * title value.
+	 */
+	var Title = (function () {
+	    function Title() {
+	    }
+	    /**
+	     * Get the title of the current HTML document.
+	     * @returns {string}
+	     */
+	    Title.prototype.getTitle = function () { return dom_adapter_1.getDOM().getTitle(); };
+	    /**
+	     * Set the title of the current HTML document.
+	     * @param newTitle
+	     */
+	    Title.prototype.setTitle = function (newTitle) { dom_adapter_1.getDOM().setTitle(newTitle); };
+	    return Title;
+	}());
+	exports.Title = Title;
+	//# sourceMappingURL=title.js.map
+
+/***/ },
+/* 281 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(6);
+	var browser_1 = __webpack_require__(286);
+	var dom_adapter_1 = __webpack_require__(9);
+	var ChangeDetectionPerfRecord = (function () {
+	    function ChangeDetectionPerfRecord(msPerTick, numTicks) {
+	        this.msPerTick = msPerTick;
+	        this.numTicks = numTicks;
+	    }
+	    return ChangeDetectionPerfRecord;
+	}());
+	exports.ChangeDetectionPerfRecord = ChangeDetectionPerfRecord;
+	/**
+	 * Entry point for all Angular debug tools. This object corresponds to the `ng`
+	 * global variable accessible in the dev console.
+	 */
+	var AngularTools = (function () {
+	    function AngularTools(ref) {
+	        this.profiler = new AngularProfiler(ref);
+	    }
+	    return AngularTools;
+	}());
+	exports.AngularTools = AngularTools;
+	/**
+	 * Entry point for all Angular profiling-related debug tools. This object
+	 * corresponds to the `ng.profiler` in the dev console.
+	 */
+	var AngularProfiler = (function () {
+	    function AngularProfiler(ref) {
+	        this.appRef = ref.injector.get(core_1.ApplicationRef);
+	    }
+	    /**
+	     * Exercises change detection in a loop and then prints the average amount of
+	     * time in milliseconds how long a single round of change detection takes for
+	     * the current state of the UI. It runs a minimum of 5 rounds for a minimum
+	     * of 500 milliseconds.
+	     *
+	     * Optionally, a user may pass a `config` parameter containing a map of
+	     * options. Supported options are:
+	     *
+	     * `record` (boolean) - causes the profiler to record a CPU profile while
+	     * it exercises the change detector. Example:
+	     *
+	     * ```
+	     * ng.profiler.timeChangeDetection({record: true})
+	     * ```
+	     */
+	    AngularProfiler.prototype.timeChangeDetection = function (config) {
+	        var record = lang_1.isPresent(config) && config['record'];
+	        var profileName = 'Change Detection';
+	        // Profiler is not available in Android browsers, nor in IE 9 without dev tools opened
+	        var isProfilerAvailable = lang_1.isPresent(browser_1.window.console.profile);
+	        if (record && isProfilerAvailable) {
+	            browser_1.window.console.profile(profileName);
+	        }
+	        var start = dom_adapter_1.getDOM().performanceNow();
+	        var numTicks = 0;
+	        while (numTicks < 5 || (dom_adapter_1.getDOM().performanceNow() - start) < 500) {
+	            this.appRef.tick();
+	            numTicks++;
+	        }
+	        var end = dom_adapter_1.getDOM().performanceNow();
+	        if (record && isProfilerAvailable) {
+	            // need to cast to <any> because type checker thinks there's no argument
+	            // while in fact there is:
+	            //
+	            // https://developer.mozilla.org/en-US/docs/Web/API/Console/profileEnd
+	            browser_1.window.console.profileEnd(profileName);
+	        }
+	        var msPerTick = (end - start) / numTicks;
+	        browser_1.window.console.log("ran " + numTicks + " change detection cycles");
+	        browser_1.window.console.log(lang_1.NumberWrapper.toFixed(msPerTick, 2) + " ms per check");
+	        return new ChangeDetectionPerfRecord(msPerTick, numTicks);
+	    };
+	    return AngularProfiler;
+	}());
+	exports.AngularProfiler = AngularProfiler;
+	//# sourceMappingURL=common_tools.js.map
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	var common_tools_1 = __webpack_require__(281);
+	var context = lang_1.global;
+	/**
+	 * Enabled Angular 2 debug tools that are accessible via your browser's
+	 * developer console.
+	 *
+	 * Usage:
+	 *
+	 * 1. Open developer console (e.g. in Chrome Ctrl + Shift + j)
+	 * 1. Type `ng.` (usually the console will show auto-complete suggestion)
+	 * 1. Try the change detection profiler `ng.profiler.timeChangeDetection()`
+	 *    then hit Enter.
+	 */
+	function enableDebugTools(ref) {
+	    context.ng = new common_tools_1.AngularTools(ref);
+	}
+	exports.enableDebugTools = enableDebugTools;
+	/**
+	 * Disables Angular 2 tools.
+	 */
+	function disableDebugTools() {
+	    delete context.ng;
+	}
+	exports.disableDebugTools = disableDebugTools;
+	//# sourceMappingURL=tools.js.map
+
+/***/ },
+/* 283 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(6);
+	var dom_adapter_1 = __webpack_require__(9);
+	/**
+	 * Predicates for use with {@link DebugElement}'s query functions.
+	 */
+	var By = (function () {
+	    function By() {
+	    }
+	    /**
+	     * Match all elements.
+	     *
+	     * ## Example
+	     *
+	     * {@example platform/dom/debug/ts/by/by.ts region='by_all'}
+	     */
+	    By.all = function () { return function (debugElement) { return true; }; };
+	    /**
+	     * Match elements by the given CSS selector.
+	     *
+	     * ## Example
+	     *
+	     * {@example platform/dom/debug/ts/by/by.ts region='by_css'}
+	     */
+	    By.css = function (selector) {
+	        return function (debugElement) {
+	            return lang_1.isPresent(debugElement.nativeElement) ?
+	                dom_adapter_1.getDOM().elementMatches(debugElement.nativeElement, selector) :
+	                false;
+	        };
+	    };
+	    /**
+	     * Match elements that have the given directive present.
+	     *
+	     * ## Example
+	     *
+	     * {@example platform/dom/debug/ts/by/by.ts region='by_directive'}
+	     */
+	    By.directive = function (type) {
+	        return function (debugElement) { return debugElement.providerTokens.indexOf(type) !== -1; };
+	    };
+	    return By;
+	}());
+	exports.By = By;
+	//# sourceMappingURL=by.js.map
+
+/***/ },
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var event_manager_1 = __webpack_require__(18);
+	var collection_1 = __webpack_require__(15);
+	var _eventNames = {
+	    // pan
+	    'pan': true,
+	    'panstart': true,
+	    'panmove': true,
+	    'panend': true,
+	    'pancancel': true,
+	    'panleft': true,
+	    'panright': true,
+	    'panup': true,
+	    'pandown': true,
+	    // pinch
+	    'pinch': true,
+	    'pinchstart': true,
+	    'pinchmove': true,
+	    'pinchend': true,
+	    'pinchcancel': true,
+	    'pinchin': true,
+	    'pinchout': true,
+	    // press
+	    'press': true,
+	    'pressup': true,
+	    // rotate
+	    'rotate': true,
+	    'rotatestart': true,
+	    'rotatemove': true,
+	    'rotateend': true,
+	    'rotatecancel': true,
+	    // swipe
+	    'swipe': true,
+	    'swipeleft': true,
+	    'swiperight': true,
+	    'swipeup': true,
+	    'swipedown': true,
+	    // tap
+	    'tap': true,
+	};
+	var HammerGesturesPluginCommon = (function (_super) {
+	    __extends(HammerGesturesPluginCommon, _super);
+	    function HammerGesturesPluginCommon() {
+	        _super.call(this);
+	    }
+	    HammerGesturesPluginCommon.prototype.supports = function (eventName) {
+	        eventName = eventName.toLowerCase();
+	        return collection_1.StringMapWrapper.contains(_eventNames, eventName);
+	    };
+	    return HammerGesturesPluginCommon;
+	}(event_manager_1.EventManagerPlugin));
+	exports.HammerGesturesPluginCommon = HammerGesturesPluginCommon;
+	//# sourceMappingURL=hammer_common.js.map
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(6);
+	var collection_1 = __webpack_require__(15);
+	var dom_adapter_1 = __webpack_require__(9);
+	var event_manager_1 = __webpack_require__(18);
+	var modifierKeys = ['alt', 'control', 'meta', 'shift'];
+	var modifierKeyGetters = {
+	    'alt': function (event) { return event.altKey; },
+	    'control': function (event) { return event.ctrlKey; },
+	    'meta': function (event) { return event.metaKey; },
+	    'shift': function (event) { return event.shiftKey; }
+	};
+	var KeyEventsPlugin = (function (_super) {
+	    __extends(KeyEventsPlugin, _super);
+	    function KeyEventsPlugin() {
+	        _super.call(this);
+	    }
+	    KeyEventsPlugin.prototype.supports = function (eventName) {
+	        return lang_1.isPresent(KeyEventsPlugin.parseEventName(eventName));
+	    };
+	    KeyEventsPlugin.prototype.addEventListener = function (element, eventName, handler) {
+	        var parsedEvent = KeyEventsPlugin.parseEventName(eventName);
+	        var outsideHandler = KeyEventsPlugin.eventCallback(element, collection_1.StringMapWrapper.get(parsedEvent, 'fullKey'), handler, this.manager.getZone());
+	        return this.manager.getZone().runOutsideAngular(function () {
+	            return dom_adapter_1.getDOM().onAndCancel(element, collection_1.StringMapWrapper.get(parsedEvent, 'domEventName'), outsideHandler);
+	        });
+	    };
+	    KeyEventsPlugin.parseEventName = function (eventName) {
+	        var parts = eventName.toLowerCase().split('.');
+	        var domEventName = parts.shift();
+	        if ((parts.length === 0) ||
+	            !(lang_1.StringWrapper.equals(domEventName, 'keydown') ||
+	                lang_1.StringWrapper.equals(domEventName, 'keyup'))) {
+	            return null;
+	        }
+	        var key = KeyEventsPlugin._normalizeKey(parts.pop());
+	        var fullKey = '';
+	        modifierKeys.forEach(function (modifierName) {
+	            if (collection_1.ListWrapper.contains(parts, modifierName)) {
+	                collection_1.ListWrapper.remove(parts, modifierName);
+	                fullKey += modifierName + '.';
+	            }
+	        });
+	        fullKey += key;
+	        if (parts.length != 0 || key.length === 0) {
+	            // returning null instead of throwing to let another plugin process the event
+	            return null;
+	        }
+	        var result = collection_1.StringMapWrapper.create();
+	        collection_1.StringMapWrapper.set(result, 'domEventName', domEventName);
+	        collection_1.StringMapWrapper.set(result, 'fullKey', fullKey);
+	        return result;
+	    };
+	    KeyEventsPlugin.getEventFullKey = function (event) {
+	        var fullKey = '';
+	        var key = dom_adapter_1.getDOM().getEventKey(event);
+	        key = key.toLowerCase();
+	        if (lang_1.StringWrapper.equals(key, ' ')) {
+	            key = 'space'; // for readability
+	        }
+	        else if (lang_1.StringWrapper.equals(key, '.')) {
+	            key = 'dot'; // because '.' is used as a separator in event names
+	        }
+	        modifierKeys.forEach(function (modifierName) {
+	            if (modifierName != key) {
+	                var modifierGetter = collection_1.StringMapWrapper.get(modifierKeyGetters, modifierName);
+	                if (modifierGetter(event)) {
+	                    fullKey += modifierName + '.';
+	                }
+	            }
+	        });
+	        fullKey += key;
+	        return fullKey;
+	    };
+	    KeyEventsPlugin.eventCallback = function (element, fullKey, handler, zone) {
+	        return function (event) {
+	            if (lang_1.StringWrapper.equals(KeyEventsPlugin.getEventFullKey(event), fullKey)) {
+	                zone.runGuarded(function () { return handler(event); });
+	            }
+	        };
+	    };
+	    /** @internal */
+	    KeyEventsPlugin._normalizeKey = function (keyName) {
+	        // TODO: switch to a StringMap if the mapping grows too much
+	        switch (keyName) {
+	            case 'esc':
+	                return 'escape';
+	            default:
+	                return keyName;
+	        }
+	    };
+	    KeyEventsPlugin.decorators = [
+	        { type: core_1.Injectable },
+	    ];
+	    KeyEventsPlugin.ctorParameters = [];
+	    return KeyEventsPlugin;
+	}(event_manager_1.EventManagerPlugin));
+	exports.KeyEventsPlugin = KeyEventsPlugin;
+	//# sourceMappingURL=key_events.js.map
+
+/***/ },
+/* 286 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	* JS version of browser APIs. This library can only run in the browser.
+	*/
+	var win = typeof window !== 'undefined' && window || {};
+	exports.window = win;
+	exports.document = win.document;
+	exports.location = win.location;
+	exports.gc = win['gc'] ? function () { return win['gc'](); } : function () { return null; };
+	exports.performance = win['performance'] ? win['performance'] : null;
+	exports.Event = win['Event'];
+	exports.MouseEvent = win['MouseEvent'];
+	exports.KeyboardEvent = win['KeyboardEvent'];
+	exports.EventTarget = win['EventTarget'];
+	exports.History = win['History'];
+	exports.Location = win['Location'];
+	exports.EventListener = win['EventListener'];
+	//# sourceMappingURL=browser.js.map
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	function __export(m) {
+	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+	}
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(6);
+	var browser_common_1 = __webpack_require__(26);
+	var dom_events_1 = __webpack_require__(72);
+	exports.DomEventsPlugin = dom_events_1.DomEventsPlugin;
+	var event_manager_1 = __webpack_require__(18);
+	exports.EventManager = event_manager_1.EventManager;
+	exports.EVENT_MANAGER_PLUGINS = event_manager_1.EVENT_MANAGER_PLUGINS;
+	var ng_probe_1 = __webpack_require__(41);
+	exports.ELEMENT_PROBE_PROVIDERS = ng_probe_1.ELEMENT_PROBE_PROVIDERS;
+	var browser_common_2 = __webpack_require__(26);
+	exports.BROWSER_APP_COMMON_PROVIDERS = browser_common_2.BROWSER_APP_COMMON_PROVIDERS;
+	exports.BROWSER_SANITIZATION_PROVIDERS = browser_common_2.BROWSER_SANITIZATION_PROVIDERS;
+	exports.BROWSER_PROVIDERS = browser_common_2.BROWSER_PROVIDERS;
+	exports.By = browser_common_2.By;
+	exports.Title = browser_common_2.Title;
+	exports.enableDebugTools = browser_common_2.enableDebugTools;
+	exports.disableDebugTools = browser_common_2.disableDebugTools;
+	exports.HAMMER_GESTURE_CONFIG = browser_common_2.HAMMER_GESTURE_CONFIG;
+	exports.HammerGestureConfig = browser_common_2.HammerGestureConfig;
+	__export(__webpack_require__(276));
+	var dom_tokens_1 = __webpack_require__(27);
+	exports.DOCUMENT = dom_tokens_1.DOCUMENT;
+	var dom_sanitization_service_1 = __webpack_require__(78);
+	exports.DomSanitizationService = dom_sanitization_service_1.DomSanitizationService;
+	exports.SecurityContext = dom_sanitization_service_1.SecurityContext;
+	var platform_browser_static_1 = __webpack_require__(288);
+	exports.bootstrapStatic = platform_browser_static_1.bootstrapStatic;
+	exports.browserStaticPlatform = platform_browser_static_1.browserStaticPlatform;
+	exports.BROWSER_APP_STATIC_PROVIDERS = platform_browser_static_1.BROWSER_APP_STATIC_PROVIDERS;
+	exports.BrowserPlatformLocation = platform_browser_static_1.BrowserPlatformLocation;
+	function browserPlatform() {
+	    if (lang_1.isBlank(core_1.getPlatform())) {
+	        core_1.createPlatform(core_1.ReflectiveInjector.resolveAndCreate(browser_common_1.BROWSER_PROVIDERS));
+	    }
+	    return core_1.assertPlatform(browser_common_1.BROWSER_PLATFORM_MARKER);
+	}
+	exports.browserPlatform = browserPlatform;
+	//# sourceMappingURL=platform_browser.js.map
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var core_1 = __webpack_require__(2);
+	var lang_1 = __webpack_require__(6);
+	var browser_common_1 = __webpack_require__(26);
+	var ng_probe_1 = __webpack_require__(41);
+	exports.ELEMENT_PROBE_PROVIDERS = ng_probe_1.ELEMENT_PROBE_PROVIDERS;
+	var browser_platform_location_1 = __webpack_require__(278);
+	exports.BrowserPlatformLocation = browser_platform_location_1.BrowserPlatformLocation;
+	var browser_common_2 = __webpack_require__(26);
+	exports.BROWSER_PROVIDERS = browser_common_2.BROWSER_PROVIDERS;
+	exports.By = browser_common_2.By;
+	exports.Title = browser_common_2.Title;
+	exports.enableDebugTools = browser_common_2.enableDebugTools;
+	exports.disableDebugTools = browser_common_2.disableDebugTools;
+	/**
+	 * An array of providers that should be passed into `application()` when bootstrapping a component
+	 * when all templates
+	 * have been precompiled offline.
+	 */
+	exports.BROWSER_APP_STATIC_PROVIDERS = 
+	/*@ts2dart_const*/ browser_common_1.BROWSER_APP_COMMON_PROVIDERS;
+	function browserStaticPlatform() {
+	    if (lang_1.isBlank(core_1.getPlatform())) {
+	        core_1.createPlatform(core_1.ReflectiveInjector.resolveAndCreate(browser_common_1.BROWSER_PROVIDERS));
+	    }
+	    return core_1.assertPlatform(browser_common_1.BROWSER_PLATFORM_MARKER);
+	}
+	exports.browserStaticPlatform = browserStaticPlatform;
+	/**
+	 * See {@link bootstrap} for more information.
+	 */
+	function bootstrapStatic(appComponentType, customProviders, initReflector) {
+	    if (lang_1.isPresent(initReflector)) {
+	        initReflector();
+	    }
+	    var appProviders = lang_1.isPresent(customProviders) ? [exports.BROWSER_APP_STATIC_PROVIDERS, customProviders] :
+	        exports.BROWSER_APP_STATIC_PROVIDERS;
+	    var appInjector = core_1.ReflectiveInjector.resolveAndCreate(appProviders, browserStaticPlatform().injector);
+	    return core_1.coreLoadAndBootstrap(appInjector, appComponentType);
+	}
+	exports.bootstrapStatic = bootstrapStatic;
+	//# sourceMappingURL=platform_browser_static.js.map
+
+/***/ },
+/* 289 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	* Regular expression for safe style values.
+	*
+	* Quotes (" and ') are allowed, but a check must be done elsewhere to ensure
+	* they're balanced.
+	*
+	* ',' allows multiple values to be assigned to the same property
+	* (e.g. background-attachment or font-family) and hence could allow
+	* multiple values to get injected, but that should pose no risk of XSS.
+	*
+	* The rgb() and rgba() expression checks only for XSS safety, not for CSS
+	* validity.
+	*
+	* This regular expression was taken from the Closure sanitization library.
+	*/
+	var SAFE_STYLE_VALUE = /^([-,."'%_!# a-zA-Z0-9]+|(?:rgb|hsl)a?\([0-9.%, ]+\))$/;
+	/**
+	 * Checks that quotes (" and ') are properly balanced inside a string. Assumes
+	 * that neither escape (\) nor any other character that could result in
+	 * breaking out of a string parsing context are allowed;
+	 * see http://www.w3.org/TR/css3-syntax/#string-token-diagram.
+	 *
+	 * This code was taken from the Closure sanitization library.
+	 */
+	function hasBalancedQuotes(value) {
+	    var outsideSingle = true;
+	    var outsideDouble = true;
+	    for (var i = 0; i < value.length; i++) {
+	        var c = value.charAt(i);
+	        if (c === '\'' && outsideDouble) {
+	            outsideSingle = !outsideSingle;
+	        }
+	        else if (c === '"' && outsideSingle) {
+	            outsideDouble = !outsideDouble;
+	        }
+	    }
+	    return outsideSingle && outsideDouble;
+	}
+	function sanitizeStyle(value) {
+	    if (String(value).match(SAFE_STYLE_VALUE) && hasBalancedQuotes(value))
+	        return value;
+	    return 'unsafe';
+	}
+	exports.sanitizeStyle = sanitizeStyle;
+	//# sourceMappingURL=style_sanitizer.js.map
+
+/***/ },
+/* 290 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	* A pattern that recognizes a commonly useful subset of URLs that are safe.
+	*
+	* This regular expression matches a subset of URLs that will not cause script
+	* execution if used in URL context within a HTML document. Specifically, this
+	* regular expression matches if (comment from here on and regex copied from
+	* Soy's EscapingConventions):
+	* (1) Either a protocol in a whitelist (http, https, mailto or ftp).
+	* (2) or no protocol.  A protocol must be followed by a colon. The below
+	*     allows that by allowing colons only after one of the characters [/?#].
+	*     A colon after a hash (#) must be in the fragment.
+	*     Otherwise, a colon after a (?) must be in a query.
+	*     Otherwise, a colon after a single solidus (/) must be in a path.
+	*     Otherwise, a colon after a double solidus (//) must be in the authority
+	*     (before port).
+	*
+	* The pattern disallows &, used in HTML entity declarations before
+	* one of the characters in [/?#]. This disallows HTML entities used in the
+	* protocol name, which should never happen, e.g. "h&#116;tp" for "http".
+	* It also disallows HTML entities in the first path part of a relative path,
+	* e.g. "foo&lt;bar/baz".  Our existing escaping functions should not produce
+	* that. More importantly, it disallows masking of a colon,
+	* e.g. "javascript&#58;...".
+	*
+	* This regular expression was taken from the Closure sanitization library.
+	*/
+	var SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file):|[^&:/?#]*(?:[/?#]|$))/gi;
+	function sanitizeUrl(url) {
+	    if (String(url).match(SAFE_URL_PATTERN))
+	        return url;
+	    return 'unsafe:' + url;
+	}
+	exports.sanitizeUrl = sanitizeUrl;
+	//# sourceMappingURL=url_sanitizer.js.map
+
+/***/ },
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./af": 57,
-		"./af.js": 57,
-		"./ar": 61,
-		"./ar-ma": 58,
-		"./ar-ma.js": 58,
-		"./ar-sa": 59,
-		"./ar-sa.js": 59,
-		"./ar-tn": 60,
-		"./ar-tn.js": 60,
-		"./ar.js": 61,
-		"./az": 62,
-		"./az.js": 62,
-		"./be": 63,
-		"./be.js": 63,
-		"./bg": 64,
-		"./bg.js": 64,
-		"./bn": 65,
-		"./bn.js": 65,
-		"./bo": 66,
-		"./bo.js": 66,
-		"./br": 67,
-		"./br.js": 67,
-		"./bs": 68,
-		"./bs.js": 68,
-		"./ca": 69,
-		"./ca.js": 69,
-		"./cs": 70,
-		"./cs.js": 70,
-		"./cv": 71,
-		"./cv.js": 71,
-		"./cy": 72,
-		"./cy.js": 72,
-		"./da": 73,
-		"./da.js": 73,
-		"./de": 75,
-		"./de-at": 74,
-		"./de-at.js": 74,
-		"./de.js": 75,
-		"./dv": 76,
-		"./dv.js": 76,
-		"./el": 77,
-		"./el.js": 77,
-		"./en-au": 78,
-		"./en-au.js": 78,
-		"./en-ca": 79,
-		"./en-ca.js": 79,
-		"./en-gb": 80,
-		"./en-gb.js": 80,
-		"./en-ie": 81,
-		"./en-ie.js": 81,
-		"./en-nz": 82,
-		"./en-nz.js": 82,
-		"./eo": 83,
-		"./eo.js": 83,
-		"./es": 84,
-		"./es.js": 84,
-		"./et": 85,
-		"./et.js": 85,
-		"./eu": 86,
-		"./eu.js": 86,
-		"./fa": 87,
-		"./fa.js": 87,
-		"./fi": 88,
-		"./fi.js": 88,
-		"./fo": 89,
-		"./fo.js": 89,
-		"./fr": 92,
-		"./fr-ca": 90,
-		"./fr-ca.js": 90,
-		"./fr-ch": 91,
-		"./fr-ch.js": 91,
-		"./fr.js": 92,
-		"./fy": 93,
-		"./fy.js": 93,
-		"./gd": 94,
-		"./gd.js": 94,
-		"./gl": 95,
-		"./gl.js": 95,
-		"./he": 96,
-		"./he.js": 96,
-		"./hi": 97,
-		"./hi.js": 97,
-		"./hr": 98,
-		"./hr.js": 98,
-		"./hu": 99,
-		"./hu.js": 99,
-		"./hy-am": 100,
-		"./hy-am.js": 100,
-		"./id": 101,
-		"./id.js": 101,
-		"./is": 102,
-		"./is.js": 102,
-		"./it": 103,
-		"./it.js": 103,
-		"./ja": 104,
-		"./ja.js": 104,
-		"./jv": 105,
-		"./jv.js": 105,
-		"./ka": 106,
-		"./ka.js": 106,
-		"./kk": 107,
-		"./kk.js": 107,
-		"./km": 108,
-		"./km.js": 108,
-		"./ko": 109,
-		"./ko.js": 109,
-		"./ky": 110,
-		"./ky.js": 110,
-		"./lb": 111,
-		"./lb.js": 111,
-		"./lo": 112,
-		"./lo.js": 112,
-		"./lt": 113,
-		"./lt.js": 113,
-		"./lv": 114,
-		"./lv.js": 114,
-		"./me": 115,
-		"./me.js": 115,
-		"./mk": 116,
-		"./mk.js": 116,
-		"./ml": 117,
-		"./ml.js": 117,
-		"./mr": 118,
-		"./mr.js": 118,
-		"./ms": 120,
-		"./ms-my": 119,
-		"./ms-my.js": 119,
-		"./ms.js": 120,
-		"./my": 121,
-		"./my.js": 121,
-		"./nb": 122,
-		"./nb.js": 122,
-		"./ne": 123,
-		"./ne.js": 123,
-		"./nl": 124,
-		"./nl.js": 124,
-		"./nn": 125,
-		"./nn.js": 125,
-		"./pa-in": 126,
-		"./pa-in.js": 126,
-		"./pl": 127,
-		"./pl.js": 127,
-		"./pt": 129,
-		"./pt-br": 128,
-		"./pt-br.js": 128,
-		"./pt.js": 129,
-		"./ro": 130,
-		"./ro.js": 130,
-		"./ru": 131,
-		"./ru.js": 131,
-		"./se": 132,
-		"./se.js": 132,
-		"./si": 133,
-		"./si.js": 133,
-		"./sk": 134,
-		"./sk.js": 134,
-		"./sl": 135,
-		"./sl.js": 135,
-		"./sq": 136,
-		"./sq.js": 136,
-		"./sr": 138,
-		"./sr-cyrl": 137,
-		"./sr-cyrl.js": 137,
-		"./sr.js": 138,
-		"./ss": 139,
-		"./ss.js": 139,
-		"./sv": 140,
-		"./sv.js": 140,
-		"./sw": 141,
-		"./sw.js": 141,
-		"./ta": 142,
-		"./ta.js": 142,
-		"./te": 143,
-		"./te.js": 143,
-		"./th": 144,
-		"./th.js": 144,
-		"./tl-ph": 145,
-		"./tl-ph.js": 145,
-		"./tlh": 146,
-		"./tlh.js": 146,
-		"./tr": 147,
-		"./tr.js": 147,
-		"./tzl": 148,
-		"./tzl.js": 148,
-		"./tzm": 150,
-		"./tzm-latn": 149,
-		"./tzm-latn.js": 149,
-		"./tzm.js": 150,
-		"./uk": 151,
-		"./uk.js": 151,
-		"./uz": 152,
-		"./uz.js": 152,
-		"./vi": 153,
-		"./vi.js": 153,
-		"./x-pseudo": 154,
-		"./x-pseudo.js": 154,
-		"./zh-cn": 155,
-		"./zh-cn.js": 155,
-		"./zh-tw": 156,
-		"./zh-tw.js": 156
+		"./af": 79,
+		"./af.js": 79,
+		"./ar": 83,
+		"./ar-ma": 80,
+		"./ar-ma.js": 80,
+		"./ar-sa": 81,
+		"./ar-sa.js": 81,
+		"./ar-tn": 82,
+		"./ar-tn.js": 82,
+		"./ar.js": 83,
+		"./az": 84,
+		"./az.js": 84,
+		"./be": 85,
+		"./be.js": 85,
+		"./bg": 86,
+		"./bg.js": 86,
+		"./bn": 87,
+		"./bn.js": 87,
+		"./bo": 88,
+		"./bo.js": 88,
+		"./br": 89,
+		"./br.js": 89,
+		"./bs": 90,
+		"./bs.js": 90,
+		"./ca": 91,
+		"./ca.js": 91,
+		"./cs": 92,
+		"./cs.js": 92,
+		"./cv": 93,
+		"./cv.js": 93,
+		"./cy": 94,
+		"./cy.js": 94,
+		"./da": 95,
+		"./da.js": 95,
+		"./de": 97,
+		"./de-at": 96,
+		"./de-at.js": 96,
+		"./de.js": 97,
+		"./dv": 98,
+		"./dv.js": 98,
+		"./el": 99,
+		"./el.js": 99,
+		"./en-au": 100,
+		"./en-au.js": 100,
+		"./en-ca": 101,
+		"./en-ca.js": 101,
+		"./en-gb": 102,
+		"./en-gb.js": 102,
+		"./en-ie": 103,
+		"./en-ie.js": 103,
+		"./en-nz": 104,
+		"./en-nz.js": 104,
+		"./eo": 105,
+		"./eo.js": 105,
+		"./es": 106,
+		"./es.js": 106,
+		"./et": 107,
+		"./et.js": 107,
+		"./eu": 108,
+		"./eu.js": 108,
+		"./fa": 109,
+		"./fa.js": 109,
+		"./fi": 110,
+		"./fi.js": 110,
+		"./fo": 111,
+		"./fo.js": 111,
+		"./fr": 114,
+		"./fr-ca": 112,
+		"./fr-ca.js": 112,
+		"./fr-ch": 113,
+		"./fr-ch.js": 113,
+		"./fr.js": 114,
+		"./fy": 115,
+		"./fy.js": 115,
+		"./gd": 116,
+		"./gd.js": 116,
+		"./gl": 117,
+		"./gl.js": 117,
+		"./he": 118,
+		"./he.js": 118,
+		"./hi": 119,
+		"./hi.js": 119,
+		"./hr": 120,
+		"./hr.js": 120,
+		"./hu": 121,
+		"./hu.js": 121,
+		"./hy-am": 122,
+		"./hy-am.js": 122,
+		"./id": 123,
+		"./id.js": 123,
+		"./is": 124,
+		"./is.js": 124,
+		"./it": 125,
+		"./it.js": 125,
+		"./ja": 126,
+		"./ja.js": 126,
+		"./jv": 127,
+		"./jv.js": 127,
+		"./ka": 128,
+		"./ka.js": 128,
+		"./kk": 129,
+		"./kk.js": 129,
+		"./km": 130,
+		"./km.js": 130,
+		"./ko": 131,
+		"./ko.js": 131,
+		"./ky": 132,
+		"./ky.js": 132,
+		"./lb": 133,
+		"./lb.js": 133,
+		"./lo": 134,
+		"./lo.js": 134,
+		"./lt": 135,
+		"./lt.js": 135,
+		"./lv": 136,
+		"./lv.js": 136,
+		"./me": 137,
+		"./me.js": 137,
+		"./mk": 138,
+		"./mk.js": 138,
+		"./ml": 139,
+		"./ml.js": 139,
+		"./mr": 140,
+		"./mr.js": 140,
+		"./ms": 142,
+		"./ms-my": 141,
+		"./ms-my.js": 141,
+		"./ms.js": 142,
+		"./my": 143,
+		"./my.js": 143,
+		"./nb": 144,
+		"./nb.js": 144,
+		"./ne": 145,
+		"./ne.js": 145,
+		"./nl": 146,
+		"./nl.js": 146,
+		"./nn": 147,
+		"./nn.js": 147,
+		"./pa-in": 148,
+		"./pa-in.js": 148,
+		"./pl": 149,
+		"./pl.js": 149,
+		"./pt": 151,
+		"./pt-br": 150,
+		"./pt-br.js": 150,
+		"./pt.js": 151,
+		"./ro": 152,
+		"./ro.js": 152,
+		"./ru": 153,
+		"./ru.js": 153,
+		"./se": 154,
+		"./se.js": 154,
+		"./si": 155,
+		"./si.js": 155,
+		"./sk": 156,
+		"./sk.js": 156,
+		"./sl": 157,
+		"./sl.js": 157,
+		"./sq": 158,
+		"./sq.js": 158,
+		"./sr": 160,
+		"./sr-cyrl": 159,
+		"./sr-cyrl.js": 159,
+		"./sr.js": 160,
+		"./ss": 161,
+		"./ss.js": 161,
+		"./sv": 162,
+		"./sv.js": 162,
+		"./sw": 163,
+		"./sw.js": 163,
+		"./ta": 164,
+		"./ta.js": 164,
+		"./te": 165,
+		"./te.js": 165,
+		"./th": 166,
+		"./th.js": 166,
+		"./tl-ph": 167,
+		"./tl-ph.js": 167,
+		"./tlh": 168,
+		"./tlh.js": 168,
+		"./tr": 169,
+		"./tr.js": 169,
+		"./tzl": 170,
+		"./tzl.js": 170,
+		"./tzm": 172,
+		"./tzm-latn": 171,
+		"./tzm-latn.js": 171,
+		"./tzm.js": 172,
+		"./uk": 173,
+		"./uk.js": 173,
+		"./uz": 174,
+		"./uz.js": 174,
+		"./vi": 175,
+		"./vi.js": 175,
+		"./x-pseudo": 176,
+		"./x-pseudo.js": 176,
+		"./zh-cn": 177,
+		"./zh-cn.js": 177,
+		"./zh-tw": 178,
+		"./zh-tw.js": 178
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -17368,16 +20443,16 @@ webpackJsonp([2],[
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 259;
+	webpackContext.id = 291;
 
 
 /***/ },
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17446,7 +20521,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 266 */
+/* 298 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17545,7 +20620,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 267 */
+/* 299 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17562,7 +20637,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 268 */
+/* 300 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17577,8 +20652,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var ng2_bootstrap_config_1 = __webpack_require__(17);
-	var datepicker_inner_component_1 = __webpack_require__(25);
+	var ng2_bootstrap_config_1 = __webpack_require__(19);
+	var datepicker_inner_component_1 = __webpack_require__(28);
 	var TEMPLATE_OPTIONS = (_a = {},
 	    _a[ng2_bootstrap_config_1.Ng2BootstrapTheme.BS4] = {
 	        DAY_TITLE: "\n        <th *ngFor=\"let labelz of labels\" class=\"text-xs-center\"><small aria-label=\"labelz.full\"><b>{{labelz.abbr}}</b></small></th>\n    ",
@@ -17635,7 +20710,8 @@ webpackJsonp([2],[
 	            self.rows = this.split(days, 7);
 	            if (this.showWeeks) {
 	                self.weekNumbers = [];
-	                var thursdayIndex = (4 + 7 - this.startingDay) % 7, numWeeks = self.rows.length;
+	                var thursdayIndex = (4 + 7 - this.startingDay) % 7;
+	                var numWeeks = self.rows.length;
 	                for (var curWeek = 0; curWeek < numWeeks; curWeek++) {
 	                    self.weekNumbers.push(self.getISO8601WeekNumber(self.rows[curWeek][thursdayIndex].date));
 	                }
@@ -17684,7 +20760,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 269 */
+/* 301 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17699,8 +20775,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var datepicker_inner_component_1 = __webpack_require__(25);
-	var ng2_bootstrap_config_1 = __webpack_require__(17);
+	var datepicker_inner_component_1 = __webpack_require__(28);
+	var ng2_bootstrap_config_1 = __webpack_require__(19);
 	var TEMPLATE_OPTIONS = {
 	    bs4: {
 	        MONTH_BUTTON: "\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\"\n                [ngClass]=\"{'btn-info': dtz.selected, 'btn-link': !dtz.selected && !datePicker.isActive(dtz), 'btn-info': !dtz.selected && datePicker.isActive(dtz), disabled: dtz.disabled}\"\n                [disabled]=\"dtz.disabled\"\n                (click)=\"datePicker.select(dtz.date)\" tabindex=\"-1\"><span [ngClass]=\"{'text-success': dtz.current}\">{{dtz.label}}</span></button>\n    "
@@ -17752,7 +20828,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 270 */
+/* 302 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -17767,8 +20843,8 @@ webpackJsonp([2],[
 	};
 	var core_1 = __webpack_require__(2);
 	var common_1 = __webpack_require__(3);
-	var ng2_bootstrap_config_1 = __webpack_require__(17);
-	var datepicker_inner_component_1 = __webpack_require__(25);
+	var ng2_bootstrap_config_1 = __webpack_require__(19);
+	var datepicker_inner_component_1 = __webpack_require__(28);
 	var TEMPLATE_OPTIONS = {
 	    bs4: {
 	        YEAR_BUTTON: "\n        <button type=\"button\" style=\"min-width:100%;\" class=\"btn btn-default\"\n                [ngClass]=\"{'btn-info': dtz.selected, 'btn-link': !dtz.selected && !datePicker.isActive(dtz), 'btn-info': !dtz.selected && datePicker.isActive(dtz), disabled: dtz.disabled}\"\n                [disabled]=\"dtz.disabled\"\n                (click)=\"datePicker.select(dtz.date)\" tabindex=\"-1\">\n          <span [ngClass]=\"{'text-success': dtz.current}\">{{dtz.label}}</span>\n        </button>\n    "
@@ -17789,7 +20865,8 @@ webpackJsonp([2],[
 	        this.datePicker.setRefreshViewHandler(function () {
 	            var years = new Array(this.yearRange);
 	            var date;
-	            for (var i = 0, start = self.getStartingYear(this.activeDate.getFullYear()); i < this.yearRange; i++) {
+	            var start = self.getStartingYear(this.activeDate.getFullYear());
+	            for (var i = 0; i < this.yearRange; i++) {
 	                date = new Date(start + i, 0, 1);
 	                date = this.fixTimeZone(date);
 	                years[i] = this.createDateObject(date, this.formatYear);
@@ -17821,7 +20898,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 271 */
+/* 303 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -17896,7 +20973,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 272 */
+/* 304 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18042,7 +21119,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 273 */
+/* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18154,10 +21231,15 @@ webpackJsonp([2],[
 	        }
 	        var hours = this.getHoursFromTemplate();
 	        var minutes = this.getMinutesFromTemplate();
-	        if (!isDefined(hours) || !isDefined(minutes)) {
+	        this.invalidHours = !isDefined(hours);
+	        this.invalidMinutes = !isDefined(minutes);
+	        if (this.invalidHours || this.invalidMinutes) {
+	            return;
 	        }
 	        this.selected.setHours(hours);
-	        if (this.selected < this.min || this.selected > this.max) {
+	        this.invalidHours = (this.selected < this.min || this.selected > this.max);
+	        if (this.invalidHours) {
+	            return;
 	        }
 	        else {
 	            this.refresh();
@@ -18177,10 +21259,15 @@ webpackJsonp([2],[
 	        }
 	        var minutes = this.getMinutesFromTemplate();
 	        var hours = this.getHoursFromTemplate();
-	        if (!isDefined(minutes) || !isDefined(hours)) {
+	        this.invalidMinutes = !isDefined(minutes);
+	        this.invalidHours = !isDefined(hours);
+	        if (this.invalidMinutes || this.invalidHours) {
+	            return;
 	        }
 	        this.selected.setMinutes(minutes);
-	        if (this.selected < this.min || this.selected > this.max) {
+	        this.invalidMinutes = (this.selected < this.min || this.selected > this.max);
+	        if (this.invalidMinutes) {
+	            return;
 	        }
 	        else {
 	            this.refresh();
@@ -18350,7 +21437,7 @@ webpackJsonp([2],[
 
 
 /***/ },
-/* 274 */
+/* 306 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -19180,6 +22267,30 @@ webpackJsonp([2],[
 	    'ᵥ': 'v',
 	    'ₓ': 'x'
 	};
+
+
+/***/ },
+/* 307 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var lang_1 = __webpack_require__(5);
+	var Utils = (function () {
+	    function Utils() {
+	    }
+	    Utils.reflow = function (element) {
+	        new Function('bs', 'return bs')(element.offsetHeight);
+	    };
+	    Utils.getStyles = function (elem) {
+	        var view = elem.ownerDocument.defaultView;
+	        if (!view || !view.opener) {
+	            view = lang_1.global;
+	        }
+	        return view.getComputedStyle(elem);
+	    };
+	    return Utils;
+	}());
+	exports.Utils = Utils;
 
 
 /***/ }
