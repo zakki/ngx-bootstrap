@@ -1,8 +1,8 @@
-export declare class TooltipSectionComponent {
+export declare class DemoSectionComponent {
     name: string;
+    titleDoc: string;
     src: string;
     html: string;
     ts: string;
-    titleDoc: string;
     doc: string;
 }
