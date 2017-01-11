@@ -89,7 +89,7 @@ a:hover {
 }
 
 #top-menu .logo {
-  margin: 3px 25px 11px 0;
+  margin: 10px 10px;
 }
 
 #top-menu .logo img {
@@ -624,6 +624,16 @@ pre {
 }
 .nav-item.customClass a {
 	background-color: #50ff50;
+}
+
+.card.customClass,
+.card.customClass .card-header,
+.panel.customClass {
+  background-color: #5bc0de;
+  color: #fff;
+}
+.panel.customClass .panel-body {
+  background-color: #337aa7;
 }
 
 .app-footer {
