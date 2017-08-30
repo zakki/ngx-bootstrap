@@ -1,4 +1,4 @@
-import {Ng2BootstrapPage} from './app.po';
+import { Ng2BootstrapPage } from './app.po';
 
 describe('ng2-bootstrap demo', function (): any {
   let page: Ng2BootstrapPage;
@@ -9,6 +9,8 @@ describe('ng2-bootstrap demo', function (): any {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Bootstrap components for Angular');
+
+    page.getParagraphText().then(text => expect(text).toEqual('Bootstrap components for Angular'));
+    // expect(page.getParagraphText()).toEqual('Bootstrap components for Angular');
   });
 });

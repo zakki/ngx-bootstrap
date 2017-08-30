@@ -4,7 +4,7 @@
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    './demo/e2e/**/*.e2e-spec.ts',
+    './demo/e2e/**/*.e2e-spec.ts'
   ],
   exclude: [
     './demo/e2e/**/accordion-demo.e2e-spec.ts',

@@ -1,7 +1,7 @@
-import {browser, $} from 'protractor';
-import {typeheadEl} from '../selectors.json';
-import {leftPanelTests} from './leftPanelTests.po';
-import {DataProvider} from '../data-provider/data-provider.po';
+import { browser, $ } from 'protractor';
+import { typeheadEl } from '../selectors.json';
+import { leftPanelTests } from './leftPanelTests.po';
+import { DataProvider } from '../data-provider/data-provider.po';
 
 let using = require('jasmine-data-provider');
 
